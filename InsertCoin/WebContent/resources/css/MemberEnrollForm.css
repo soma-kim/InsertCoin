@@ -1,0 +1,296 @@
+div {
+    box-sizing: border-box;
+}
+
+/* 전체 영역 */
+.wrap {
+    /* 화면 크기 : 최소 1200(px) X 1200(px) */
+    width: 100%;
+    min-width: 1200px;
+    min-height: 1200px;
+    background-color: #171a21;
+}
+
+/* 헤더 + 푸터 */
+.header_container, .footer_container {
+    /* 세로 크기 : 100(px) */
+    width: 100%;
+    height: 100px;
+    background-color: rgb(232, 183, 34);
+}
+
+
+/* 헤더 영역 */
+.header_container>div {
+    height: 100%;
+    float: left;
+}
+
+
+/* 헤더 로고 */
+.header_logo_container {
+    /* 좌우 여백 가로 크기 : 21% */
+    margin-left: 21%;
+    /* 로고 크기 : 8% X 40(px) */
+    width: 8%;
+    position: relative;
+}
+#header_logo {
+    height: 40px;
+    /* 로고 이미지 중앙 정렬 */
+    position: absolute;
+    margin: auto;
+    right : 0px;
+    left : 0px;
+    top : 0px;
+    bottom : 0px;
+}
+
+
+/* 헤더 메뉴바 */
+#header_menu {
+    /* 메뉴바 가로 크기 : 45% */
+    width: 45%;
+}
+#header_menu>ul {
+    height: 100%;
+    /* 여백 없애 메인 메뉴들이 전체 채우도록 함 */
+    padding: 0px;
+}
+#header_menu li {
+    list-style-type: none;
+}
+#header_menu>ul>li a:hover {
+    text-decoration: none;
+}
+
+/* 헤더 메인 메뉴들 */
+#header_menu>ul>li {
+    /* 로그인 후 고려해 메뉴 5개 구역 사이즈로 맞춤 */
+    width: 20%;
+    height: 100%;
+    float: left;
+}
+#header_menu>ul>li>a {
+    /* 메인 메뉴들 세로 크기 조절하기 위해 인라인 요소에서 블럭 요소로 바꿈 */
+    display: block;
+    height : 100%;
+    font-size: 20px;
+    font-weight: bolder;
+    /* 텍스트 수직 정렬 */
+    line-height: 100px;
+    text-align: center;
+}
+
+/* 메인 메뉴들 중 로그인만 색상 다르게 표시 */
+.main_menu {
+    color: rgb(255, 255, 255);
+}
+#login_menu {
+    color: rgb(0, 0, 0);
+}
+
+/* 로그인한 경우 프로필 + 닉네임 효과 설정 */
+#header_profile {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+}
+
+/* 메인 메뉴들 호버 효과 */
+#header_menu>ul>li>a:hover {
+    /* 색상 변경 */
+    color: rgb(125, 131, 133);
+}
+#header_menu>ul>li>a:hover+ul {
+    /* 서브 메뉴들 표시 */
+    display: block;
+}
+
+/* 헤더 서브 메뉴들 */
+#header_menu>ul>li ul {
+    /* 메인 메뉴들 호버 전까지 숨김 */
+    display: none;
+    /* 서브 메뉴들 가로 크기 메인 메뉴보다 좀 더 크게 처리 */
+    width: 120%;
+    /* 서브 메뉴들 여백 제거 */
+    padding: 0px;
+    /* 그림자 처리 */
+    box-shadow: 5px 5px 10px rgb(116, 118, 118);
+    background-color: rgb(232, 183, 34);
+    line-height: 30px;
+}
+#header_menu>ul>li ul>li>a {
+    /* 서브 메뉴들 크기 조절하기 위해 인라인 요소에서 블럭 요소로 바꿈 */
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+
+/* 서브 메뉴들 호버 효과 */
+#header_menu>ul>li ul:hover {
+    /* 서브 메뉴들 표시 유지 */
+    display: block;
+}
+#header_menu>ul>li ul>li:hover {
+    /* 배경색 변경 */
+    background-color: rgb(143, 148, 150);
+}
+
+
+/* 헤더 검색 */
+.header_search_container {
+    /* 검색 가로 크기 : 5% */
+    width: 5%;
+    position: relative;
+}
+
+/* 검색 클릭 전까지 검색창 숨김 처리 */
+.header_search_container input {
+    display: none;
+}
+
+/* 헤더 검색 버튼 */
+#header_search {
+    /* 검색 클릭 가능한 영역 아이콘 크기보다 더 넓게 지정 */
+    width: 50%;
+    height: 50px;
+    /* 오른쪽 중앙 정렬 */
+    position: absolute;
+    margin: auto;
+    right : 0px;
+    top : 0px;
+    bottom : 0px;
+    background-color: rgb(232, 183, 34);
+    border: 0;
+}
+
+/* 헤더 검색 아이콘 */
+.bi {
+    width: 25px;
+    height: 25px;
+    color: rgb(255, 255, 255);
+}
+
+
+
+/* 컨텐츠 영역 */
+.content_container {
+    min-height: 1000px;
+    color: rgb(255, 255, 255);
+}
+
+
+
+/* 푸터 영역 */
+
+/* 헤더 ABOUT + 개인정보 보호정책 + 환불 정책 */
+#footer_link {
+    padding-top: 15px;
+    font-size: 14px;
+}
+#footer_link a {
+    color: rgb(0, 0, 0);
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+/* 헤더 ABOUT + 개인정보 보호정책 + 환불 정책 호버 효과 */
+#footer_link a:hover {
+    /* 색상 변경 */
+    color: rgb(125, 131, 133);
+}
+
+/* Copyright */
+#footer_copyright {
+    padding-top: 10px;
+    text-align: center;
+    font-size: 12px;
+}
+
+
+/*----------------------------------- 개별 화면 구현 -----------------------------------*/
+/* 이메일/비밀번호와 로그인 사이의 간격을 주고 싶은데 안 됨 ,,, 어떻게 해야 할까요,,, */
+
+/* 회원가입 창 */
+#enroll_form {
+    background-color: rgb(217, 217, 217);
+    margin : auto;
+    margin-top : 100px;
+    width : 600px;
+    height: 850px;
+    color : black;
+}
+
+/* 로고, 이메일, 인증번호, 비밀번호/확인, 닉네임 입력 영역 */
+.enroll_content {
+    margin : 50px;
+}
+
+/* 회원가입 창 로고 */
+#enroll_logo {
+    margin-top : 50px;
+    margin-bottom : 70px;
+    width : 300px;
+    height : 100px;
+}
+
+/* 회원가입 글자 */
+#enroll_text { 
+    width : 89.5%;
+    margin-left : 20px;
+}
+
+/* 회원가입 정보 입력 폼 */
+#enroll_table {
+    width : 90%;
+    color : black;
+    line-height: 250%;
+    border-collapse: separate;
+    border-spacing: 0 3px;
+}
+
+/* 회원가입 정보 입력 폼 중에서 input 태그 */
+#enroll_table input {
+    background-color: rgb(125, 131, 133);
+    border : none;
+    width : 100%;
+    border-radius: 5px;
+}
+
+#cert_email {
+    margin-bottom : 40px;
+}
+
+/* 10분간 유효합니다 텍스트 */
+.superscript {
+    vertical-align: super;
+    font-size : 0.75em;
+}
+
+/* 버튼 전체 */
+table button {
+    border : 3px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* 인증번호 요청, 인증, 중복확인 버튼 */
+.table_button {
+    width : 200px;
+    float : right;
+}
+
+/* 가입하기 버튼 */
+#enroll_button {
+    width : 100%;
+    line-height: 250%;
+    margin-top : -50px;
+    background-color: rgb(232, 183, 34);
+    border : 3px;
+    font-weight : bold;
+    border-radius: 5px;
+}

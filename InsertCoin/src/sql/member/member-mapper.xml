@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>SQL</comment>
+	
+	<entry key="loginMember">
+		SELECT *
+		FROM MEMBER
+		WHERE MEM_EMAIL = ?
+			AND MEM_PASSWORD = ?
+			AND MEM_ACTIVE = 'Y'
+	</entry>
+	
+	<entry key="insertMember">
+		INSERT INTO MEMBER 
+			VALUES (SEQ_MEMBER_NO.NEXTVAL
+			      , 'Y'
+			      , ?
+			      , ?
+			      , ?
+			      , NULL
+			      , SYSDATE)
+	</entry>
+	
+	<entry key="emailCheck">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEM_EMAIL = ?
+	</entry>
+	
+</properties>

@@ -1,0 +1,80 @@
+div {
+    box-sizing: border-box;
+}
+
+/* 전체 영역 */
+.wrap {
+    /* 화면 크기 : 최소 1200(px) X 1200(px) */
+    width: 100%;
+    min-width: 1200px;
+    min-height: 1200px;
+    background-color: #171a21;
+}
+
+/*----------------------------------- 개별 화면 구현 -----------------------------------*/
+/* 이메일/비밀번호와 로그인 사이의 간격을 주고 싶은데 안 됨 ,,, 어떻게 해야 할까요,,, */
+
+/* 로그인 창 */
+#login_form {
+    background-color: rgb(217, 217, 217);
+    margin : auto;
+    margin-top : 100px;
+    width : 500px;
+    height: 700px;
+    color : black;
+}
+
+/* 로고, 이메일, 비밀번호 입력 영역 */
+.login_content {
+    margin : 70px;
+}
+
+/* 로그인 창 로고 */
+#login_logo {
+    margin-top : 50px;
+    margin-bottom : 70px;
+    width : 300px;
+    height : 100px;
+}
+
+/* 로그인 글자 */
+#login_text { 
+    width : 89.5%;
+    margin-left : 20px;
+}
+
+/* 로그인 정보 입력 폼 */
+#login_table {
+    width : 90%;
+    color : black;
+    line-height: 250%;
+    border-collapse: separate;
+    border-spacing: 0 3px;
+}
+
+/* 로그인 정보 입력 폼 중에서 input 태그 */
+#login_table input {
+    background-color: rgb(125, 131, 133);
+    border : none;
+    width : 100%;
+    border-radius: 5px;
+}
+
+/* 로그인 버튼 */
+#login_table button {
+    width : 100%;
+    line-height: 250%;
+    margin-top : -50px;
+    background-color: rgb(232, 183, 34);
+    border : 3px;
+    font-weight : bold;
+    border-radius: 5px;
+}
+
+/* 회원가입, 비밀번호 찾기 */
+#etc>a {
+    width : 89.5%;
+    margin-left : 20px;
+    color : black;
+    font-weight : bold;
+}
