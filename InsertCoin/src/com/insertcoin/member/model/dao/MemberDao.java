@@ -148,6 +148,41 @@ public class MemberDao {
         }
         
         return count;
+         
+    }
+    
+    public int nicknameCheck(Connection conn, String checkNickname) {
+        
+        // SELECT문 => ResultSet 객체 (숫자 1개)
+        
+        // 필요한 변수 세팅
+        int count = 0;
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String sql = prop.getProperty("nicknameCheck");
+        
+        try {
+            pstmt = conn.prepareStatement(sql);
+            
+            pstmt.setString(1, checkNickname);
+            
+            rset = pstmt.executeQuery();
+            
+            if(rset.next()) {
+                count = rset.getInt("COUNT(*)");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            
+            JDBCTemplate.close(rset);
+            JDBCTemplate.close(pstmt);
+            
+        }
+        
+        return count;
         
     }
 

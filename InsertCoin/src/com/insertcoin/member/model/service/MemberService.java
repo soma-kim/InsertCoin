@@ -49,5 +49,18 @@ public class MemberService {
         return count;
         
     }
+    
+    // 닉네임 중복체크용 서비스
+    public int nicknameCheck(String nicknameCheck) {
+        
+        Connection conn = JDBCTemplate.getConnection();
+        
+        int count = new MemberDao().nicknameCheck(conn, nicknameCheck);
+        
+        JDBCTemplate.close(conn);
+        
+        return count;
+        
+    }
 
 }

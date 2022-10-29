@@ -55,11 +55,11 @@
                             <th colspan="4">
                                 <input type="email" name="memEmail" maxlength="30" required> <br>
                             </th>
-                            <td><button class="table_button" onclick="emailCheck();">중복확인</button></td>
+                            <td colspan="2"><button class="table_button" onclick="emailCheck();">중복확인</button></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>
+                            <td colspan="6">
                                 <div><label id="emailCheckOutput"></label></div>
                             </td>
                         </tr>
@@ -67,39 +67,44 @@
                             <th colspan="4">
                                 <input type="text" name="certification_num" placeholder="인증번호를 입력하세요." required><br>
                                 <div class="superscript">인증번호는 최대 10분간만 유효합니다.</div>
-                                <td><button class="table_button" id="cert_email">인증</button></td>
+                                <td><button class="table_button_cert">요청</button></td>
+                                <td><button class="table_button_cert">확인</button></td>
                             </th>
                             
                         </tr>
                         <tr>
-                            <th colspan="5">비밀번호</th>
+                            <th colspan="6">비밀번호</th>
                         </tr>
                         <tr>
-                            <th colspan="5">
+                            <th colspan="6">
                                 <input type="password" name="memPwd" required>
                             </th>
                         </tr>
                         <tr>
-                            <th colspan="5">비밀번호 확인</th>
+                            <th colspan="6">비밀번호 확인</th>
                         </tr>
                         <tr>
-                            <th colspan="5">
+                            <th colspan="6">
                                 <input type="password" name="memPwd_confirm" required>
                             </th>
                         </tr>
                         <tr>
-                            <th colspan="5">닉네임</th>
+                            <th colspan="6">닉네임</th>
                         </tr>
                         <tr>
                             <th colspan="4">
-                                <input type="text" name="memNickname" required>
+                                <input type="text" name="memNickname" minlength="2" maxlength="10" required>
                             </th>
-                            <td><button class="table_button">중복확인</button></td>
+                            <td colspan="2"><button class="table_button" onclick="nicknameCheck();">중복확인</button></td>
                         </tr>
-                        
+                        <tr>
+                            <td colspan="6">
+                                <div><label id="nicknameCheckOutput"></label></div>
+                            </td>
+                        </tr>
                         <tr>
                             <!-- 가입하기 버튼 버튼 -->
-                            <th colspan="5"><button type="submit" id="enroll_button">가입하기</button></th>
+                            <th colspan="6"><button type="submit" id="enroll_button">가입하기</button></th>
                         </tr>
                     </table>
                 </div>
@@ -118,7 +123,7 @@
         				// result 값은 "possible" 또는 "impossible"
         				if(result == "impossible") {
         					
-        					$("#emailCheckOutput").text("이미 존재하는 아이디입니다! 사용하실 수 없어요 ㅠ0ㅠ").css("color","red").css("font-size","12px");
+        					$("#emailCheckOutput").text("이미 존재하는 아이디이므로 사용할 수 없습니다.").css("color","red").css("font-size","12px");
         					$memEmail.val("");
         					$memEmail.focus();
         					
@@ -131,6 +136,35 @@
         			},
         			error : function () {
         				console.log("이메일 중복 체크용 ajax 통신 실패!");
+        			}
+
+        		});
+        	}
+        	
+        	function nicknameCheck() {
+        		var $memNickname = $("#enroll_table input[name=memNickname]");
+        		
+        		$.ajax({
+        			url : "nicknameCheck.me",
+        			data : {checkNickname : $memNickname.val()},
+        			success : function(result) {
+        				
+        				// result 값은 "possible" 또는 "impossible"
+        				if(result == "impossible") {
+        					
+        					$("#nicknameCheckOutput").text("이미 존재하는 닉네임이므로 사용할 수 없습니다.").css("color","red").css("font-size","12px");
+        					$memNickname.val("");
+        					$memNickname.focus();
+        					
+        				} else {
+        					
+        					$("#nicknameCheckOutput").text("사용 가능한 닉네임입니다!").css("color","yellow").css("font-size","12px");
+        					
+        				}
+        				
+        			},
+        			error : function () {
+        				console.log("닉네임 중복 체크용 ajax 통신 실패!");
         			}
 
         		});

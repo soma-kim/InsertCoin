@@ -28,4 +28,10 @@
 		WHERE MEM_EMAIL = ?
 	</entry>
 	
+	<entry key="nicknameCheck">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEM_NICKNAME = ?
+	</entry>
+	
 </properties>

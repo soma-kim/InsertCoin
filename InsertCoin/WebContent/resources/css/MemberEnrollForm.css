@@ -278,10 +278,17 @@ table button {
     font-weight: bold;
 }
 
-/* 인증번호 요청, 인증, 중복확인 버튼 */
+/* 중복확인 버튼 */
 .table_button {
     width : 200px;
     float : right;
+}
+
+/* 인증요청, 확인 버튼 */
+.table_button_cert {
+    width : 80px;
+    float : right;
+    margin-bottom : 40px;
 }
 
 /* 가입하기 버튼 */
