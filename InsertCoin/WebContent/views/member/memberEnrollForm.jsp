@@ -52,11 +52,9 @@
                             <th>이메일</th>
                         </tr>
                         <tr>
-                            <th colspan="4">
-                                <input type="email" name="memEmail" maxlength="30" required> <br>
+                            <th colspan="6">
+                                <input type="email" name="memEmail" maxlength="30" onchange="emailCheck();" required> <br>
                             </th>
-                            <td colspan="2"><button class="table_button" onclick="emailCheck();">중복확인</button></td>
-                            <td></td>
                         </tr>
                         <tr>
                             <td colspan="6">
@@ -77,7 +75,7 @@
                         </tr>
                         <tr>
                             <th colspan="6">
-                                <input type="password" name="memPwd" required>
+                                <input type="password" class="pwd" id="pwd1" minlength="8" maxlength="16" required>
                             </th>
                         </tr>
                         <tr>
@@ -85,17 +83,21 @@
                         </tr>
                         <tr>
                             <th colspan="6">
-                                <input type="password" name="memPwd_confirm" required>
+                                <input type="password" class="pwd" id="pwd2" minlength="8" maxlength="16" required>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="6">
+                           		<div><label id="pwdCheckOutput"></label></div>
                             </th>
                         </tr>
                         <tr>
                             <th colspan="6">닉네임</th>
                         </tr>
                         <tr>
-                            <th colspan="4">
-                                <input type="text" name="memNickname" minlength="2" maxlength="10" required>
+                            <th colspan="6">
+                                <input type="text" name="memNickname" id="memNickname" minlength="2" maxlength="10" onchange="nicknameCheck();" required>
                             </th>
-                            <td colspan="2"><button class="table_button" onclick="nicknameCheck();">중복확인</button></td>
                         </tr>
                         <tr>
                             <td colspan="6">
@@ -112,6 +114,7 @@
         </div>
 
         <script>
+        	// 아이디 중복 체크용 제이쿼리
         	function emailCheck() {
         		var $memEmail = $("#enroll_table input[name=memEmail]");
         		
@@ -129,7 +132,7 @@
         					
         				} else {
         					
-        					$("#emailCheckOutput").text("사용 가능한 아이디입니다!").css("color","yellow").css("font-size","12px");
+        					$("#emailCheckOutput").text("사용 가능한 아이디입니다!").css("color","rgb(232, 183, 34)").css("font-size","12px");
         					
         				}
         				
@@ -141,8 +144,11 @@
         		});
         	}
         	
+        	// 닉네임 중복 체크용 제이쿼리
         	function nicknameCheck() {
         		var $memNickname = $("#enroll_table input[name=memNickname]");
+        		let nickname = $("#memNickname").val();
+        		let regNickname = /^[a-zA-Z0-9ㄱ-ㅎ가-힣]{2,10}$/;
         		
         		$.ajax({
         			url : "nicknameCheck.me",
@@ -157,9 +163,11 @@
         					$memNickname.focus();
         					
         				} else {
-        					
-        					$("#nicknameCheckOutput").text("사용 가능한 닉네임입니다!").css("color","yellow").css("font-size","12px");
-        					
+                			if(regNickname.test(nickname) == false) {
+            					$("#nicknameCheckOutput").text("닉네임은 2~10자로 한글/영문자/숫자/특수문자()가 포함될 수 있습니다.").css("color","red").css("font-size","12px");
+       						} else {
+        						$("#nicknameCheckOutput").text("사용 가능한 닉네임입니다!").css("color","rgb(232, 183, 34)").css("font-size","12px");
+        					}
         				}
         				
         			},
@@ -169,6 +177,29 @@
 
         		});
         	}
+        	
+        	// 비밀번호 확인용 제이쿼리
+        	$('.pwd').focusout(function() {
+        		        		
+        		let pwd1 = $("#pwd1").val();
+        		let pwd2 = $("#pwd2").val();
+        		let regPwd = /^[a-zA-Z0-9]{8,20}$/;
+        		
+        		if(pwd1 != "" && pwd2 != "") { // 사용자가 비밀번호, 비밀번호 확인을 모두 입력했다면
+        			
+        			if(pwd1 != pwd2) {
+        				$("#pwdCheckOutput").text("비밀번호가 일치하지 않습니다. 다시 확인해 주세요.").css("color","red").css("font-size","12px");
+        			} else {
+        				if(regPwd.test(pwd2) == false) {
+        					$("#pwdCheckOutput").text("비밀번호는 8~20자로 숫자/영어 대,소문자/특수문자()가 포함될 수 있습니다.").css("color","red").css("font-size","12px");
+        				} else {
+        					$("#pwdCheckOutput").text("비밀번호가 일치합니다!").css("color","rgb(232, 183, 34)").css("font-size","12px");
+        				}
+        			}
+        			
+        		}
+        		
+        	});
         </script>
 
 </body>
