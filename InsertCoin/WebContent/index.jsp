@@ -24,7 +24,9 @@
 </head>
 <body>
 	
-	<%@ include file = "views/member/mainLogin.jsp" %>
+	<%@ include file = "views/common/header.jsp" %>
+	<div class="wrap" style="color:white;" align="center"><h1>메인화면</h1></div>
+	<%@ include file = "views/common/footer.jsp" %>
 
 </body>
 </html>

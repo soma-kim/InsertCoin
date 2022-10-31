@@ -1,0 +1,442 @@
+div {
+    box-sizing: border-box;
+}
+
+/* 전체 영역 */
+.wrap {
+    /* 화면 크기 : 최소 1200(px) X 1200(px) */
+    width: 100%;
+    min-width: 1200px;
+    min-height: 1200px;
+    background-color: rgb(23, 26, 33);
+}
+
+/* 헤더 + 푸터 */
+.header_container, .footer_container {
+    /* 세로 크기 : 100(px) */
+    width: 100%;
+    height: 100px;
+    background-color: rgb(232, 183, 34);
+}
+
+
+
+/* 헤더 영역 */
+.header_container>div {
+    height: 100%;
+    float: left;
+}
+
+
+/* 헤더 로고 */
+.header_logo_container {
+    /* 좌우 여백 가로 크기 : 21% */
+    margin-left: 21%;
+    /* 로고 크기 : 8% X 40(px) */
+    width: 8%;
+    position: relative;
+}
+#header_logo {
+    height: 40px;
+    /* 로고 이미지 중앙 정렬 */
+    position: absolute;
+    margin: auto;
+    right : 0px;
+    left : 0px;
+    top : 0px;
+    bottom : 0px;
+}
+
+
+/* 헤더 메뉴바 */
+#header_menu {
+    /* 메뉴바 가로 크기 : 45% */
+    width: 45%;
+}
+#header_menu>ul {
+    height: 100%;
+    /* 여백 없애 메인 메뉴들이 전체 채우도록 함 */
+    padding: 0px;
+}
+#header_menu li {
+    list-style-type: none;
+}
+#header_menu>ul>li a:hover {
+    text-decoration: none;
+}
+
+/* 헤더 메인 메뉴들 */
+#header_menu>ul>li {
+    /* 로그인 후 고려해 메뉴 5개 구역 사이즈로 맞춤 */
+    width: 20%;
+    height: 100%;
+    float: left;
+}
+#header_menu>ul>li>a {
+    /* 메인 메뉴들 세로 크기 조절하기 위해 인라인 요소에서 블럭 요소로 바꿈 */
+    display: block;
+    height : 100%;
+    font-size: 20px;
+    font-weight: bolder;
+    /* 텍스트 수직 정렬 */
+    line-height: 100px;
+    text-align: center;
+}
+
+/* 메인 메뉴들 중 로그인만 색상 다르게 표시 */
+.main_menu {
+    color: rgb(255, 255, 255);
+}
+#login_menu {
+    color: rgb(0, 0, 0);
+}
+
+/* 로그인한 경우 프로필 + 닉네임 효과 설정 */
+#header_profile {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+}
+
+/* 메인 메뉴들 호버 효과 */
+#header_menu>ul>li>a:hover {
+    /* 색상 변경 */
+    color: rgb(125, 131, 133);
+}
+#header_menu>ul>li>a:hover+ul {
+    /* 서브 메뉴들 표시 */
+    display: block;
+}
+
+/* 헤더 서브 메뉴들 */
+#header_menu>ul>li ul {
+    /* 메인 메뉴들 호버 전까지 숨김 */
+    display: none;
+    /* 서브 메뉴들 가로 크기 메인 메뉴보다 좀 더 크게 처리 */
+    width: 120%;
+    /* 서브 메뉴들 여백 제거 */
+    padding: 0px;
+    /* 그림자 처리 */
+    box-shadow: 3px 3px 10px 2px rgb(90, 92, 92);
+    background-color: rgb(232, 183, 34);
+    line-height: 30px;
+}
+#header_menu>ul>li ul>li>a {
+    /* 서브 메뉴들 크기 조절하기 위해 인라인 요소에서 블럭 요소로 바꿈 */
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+
+/* 서브 메뉴들 호버 효과 */
+#header_menu>ul>li ul:hover {
+    /* 서브 메뉴들 표시 유지 */
+    display: block;
+}
+#header_menu>ul>li ul>li:hover {
+    /* 배경색 변경 */
+    background-color: rgb(143, 148, 150);
+}
+
+
+/* 헤더 검색 */
+.header_search_container {
+    /* 검색 가로 크기 : 5% */
+    width: 5%;
+    position: relative;
+}
+
+/* 검색 클릭 전까지 검색창 숨김 처리 */
+.header_search_container input {
+    display: none;
+}
+
+/* 헤더 검색 버튼 */
+#header_search {
+    /* 검색 클릭 가능한 영역 아이콘 크기보다 더 넓게 지정 */
+    width: 50%;
+    height: 50px;
+    /* 오른쪽 중앙 정렬 */
+    position: absolute;
+    margin: auto;
+    right : 0px;
+    top : 0px;
+    bottom : 0px;
+    background-color: rgb(232, 183, 34);
+    border: 0;
+}
+
+/* 헤더 검색 아이콘 */
+.fa-magnifying-glass {
+    font-size: 1.5rem;
+    color: rgb(255, 255, 255);
+}
+
+
+
+/* 컨텐츠 영역 */
+.content_container {
+    min-height: 1000px;
+    color: rgb(255, 255, 255);
+}
+
+
+
+/* 상하단 이동 스크롤 버튼 */
+.fa-circle-chevron-up, .fa-circle-chevron-down {
+    font-size: 2.2rem;
+    color: rgb(255, 255, 255);
+    /* 위치 오른쪽 하단 고정 */
+    position: fixed;
+    right: 40px;
+}
+.fa-circle-chevron-up {
+    bottom: 145px;
+}
+.fa-circle-chevron-down {
+    bottom: 95px;
+}
+
+/* 1:1 문의 채팅 챗봇 */
+.fa-robot {
+    font-size: 2.8em;
+    color: rgb(255, 255, 255);
+    /* 위치 오른쪽 하단 고정 */
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+}
+
+/* 스크롤 버튼 + 1:1 문의 채팅 챗봇 호버 효과 */
+.fa-circle-chevron-up:hover, .fa-circle-chevron-down:hover, .fa-robot:hover {
+    /* 색상 변경 */
+    color: rgb(143, 148, 150);
+}
+
+
+/* 푸터 영역 */
+
+/* 헤더 ABOUT + 개인정보 보호정책 + 환불 정책 */
+#footer_link {
+    padding-top: 15px;
+    font-size: 14px;
+}
+#footer_link a {
+    color: rgb(0, 0, 0);
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+/* 헤더 ABOUT + 개인정보 보호정책 + 환불 정책 호버 효과 */
+#footer_link a:hover {
+    /* 색상 변경 */
+    color: rgb(125, 131, 133);
+}
+
+/* Copyright */
+#footer_copyright {
+    padding-top: 10px;
+    text-align: center;
+    font-size: 12px;
+}
+
+/*------------------------------ 컨텐츠 영역 ---------------------------*/
+
+/* 전체 틀 */
+.outer {
+    width : 1000px;
+    margin: auto;
+}
+
+/* 자유게시판 글씨 */
+#title {
+    margin : 100px 0px 20px 0px;
+    font-size : 30px;
+    font-weight: bold;
+}
+
+/* 게시글 테이블 */
+div {
+    border : 3px;
+    border-radius: 5px;
+    padding : 5px;
+}
+
+.list-area {
+    text-align : justify;
+    line-height : 200%;
+}
+
+/* 게시글 테이블 중 메뉴 칸 */
+#board_title {
+    height : 50px;
+    text-align: left;
+}
+
+.board_left {
+    width : 700px;
+}
+
+.board_right {
+    width : 300px;
+    text-align : right;
+}
+
+
+/* 테이블 한 줄마다 줄 긋기 */
+.line {
+    border-bottom : 1px solid;
+}
+
+/* 수정,삭제,목록,신고 버튼 */
+.table_button {
+    width : 70px;
+    height : 35x;
+    vertical-align: center;
+    border : 3px;
+    border-radius: 5px;
+}
+
+#red_board {
+    float : right;
+    background-color :rgb(231, 76, 60);
+    width : 70px;
+    height : 35x;
+    vertical-align: center;
+    color : white;
+    border : 3px;
+    border-radius: 5px;
+}
+
+/* 댓글 개수 */
+#comment_count { 
+    background-color: rgba(224, 224, 224, 0.61);
+}
+
+/* 댓글창 */
+.comment_table {
+    width : 100%;
+}
+
+.comment_table td {
+    padding-bottom : 10px;
+}
+
+#profile_photo {
+    width : 50px;
+    height : 50px;
+    float : center;
+    margin-right : 10px;
+}
+
+.comment_info1 {
+    width : 700px;
+    display : inline-block;
+    font-weight: bold;
+    padding : 0px;
+}
+
+.comment_info2 {
+    width : 150px;
+    display : inline-block;
+    text-align : right;
+    font-weight: bold;
+}
+
+#comment_info3 {
+    width : 60px;
+    float: right;
+    background-color: rgb(231, 76, 60);
+    color : white;
+    height : 30px;
+    line-height: 0px;
+    border : 3px;
+    border-radius: 5px;
+}
+
+/* 댓글 쓰기 창 */
+.comment_container {
+    background-color: rgba(224, 224, 224, 0.61);
+    color :rgb(0, 0, 0);
+    font-weight: bold;
+    border : 3px;
+    border-radius: 5px;
+    padding : 10px;
+    margin-top : 10px;
+    line-height : 30px;
+}
+
+.comment_textarea { 
+    width : 90%;
+    resize : none;
+    border : 3px;
+    border-radius: 5px;
+}
+
+/* 댓글 등록 글자가 왜 저럴까요 ㅠㅠ 안 올라와요 */
+#comment_submit {
+    width : 50px;
+    height : 30px;
+    padding : 45px 0px 20px 0px;
+}
+
+/* 페이징 바 */
+div>button {
+    border : 10px;
+    background-color : rgb(217, 217, 217);
+    border-radius : 3px;
+}
+
+.board_button:hover {
+    border : 10px;
+    background-color : rgb(232, 183, 34);
+    border-radius : 3px;
+}
+
+/* 글쓰기 버튼 */
+.board_button {
+    width : 85px;
+    height : 30px;
+    border : 3px;
+    border-radius: 5px;
+}
+
+/* 검색 필터, 검색창 */
+.board_search {
+    display : inline-block;
+    height : 30px;
+    border : 10px;
+    border-radius : 3px;
+}
+
+div>select {
+    margin-bottom : 4px;
+    border-width : 2px;
+}
+
+.board-right {
+    margin-left : 600px;
+    margin-top: -55px;
+}
+
+/* 신고 모달 */
+.modal {
+    color :rgb(0, 0, 0)
+}
+
+.modal-body input {
+    margin : 10px;
+}
+
+.modal_button {
+    background-color: white;
+    margin: auto;
+    font-weight : bold;
+}
+
+.button2 {
+    color :rgb(232, 183, 34)
+}

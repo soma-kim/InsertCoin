@@ -28,6 +28,7 @@
 
 <body>
 
+
         <!-------------------------------------- 컨텐츠 영역 -------------------------------------->
 
 		
@@ -79,7 +80,10 @@
                     </div>
                 </div>
             </form>
-        </div>s
+        </div>
+        
+        <%@ include file = "../../views/common/footer.jsp" %>
+        
         
         <script>
     		function enrollPage() {

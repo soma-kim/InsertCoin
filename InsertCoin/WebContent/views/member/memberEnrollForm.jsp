@@ -112,6 +112,8 @@
                 </div>
             </form>
         </div>
+        
+        <%@ include file = "../../views/common/footer.jsp" %>
 
         <script>
         	// 아이디 중복 체크용 제이쿼리

@@ -40,9 +40,6 @@
 		}
 	</script>
 
-    <!-- 전체 영역 -->
-    <div class="wrap">
-
     <!-------------------------------------- 헤더 영역 -------------------------------------->
 
         <!-- 헤더 영역 -->
@@ -50,7 +47,7 @@
 
             <!-- 헤더 로고 -->
             <div class="header_logo_container">
-                <a href=""><img id="header_logo" src="resources/image/logo/insertcoin_logo.png" width="100%"></a>
+                <a href=""><img id="header_logo" src="resources/image/common/main-logo.png" width="100%"></a>
             </div>
 
             <!-- 헤더 메뉴바 -->
@@ -61,7 +58,7 @@
                         <a href="" class="main_menu">커뮤니티</a>
                         <ul>
                             <li><a href="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;개발자 게시판</a></li>
-                            <li><a href="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</a></li>
+                            <li><a onclick="genBoardPage();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</a></li>
                         </ul>
                     </li>
                     <li>
@@ -107,32 +104,6 @@
             </div>
 
         </div>
-	
-	<div align="center" style="color:white; height:1000px; margin:auto; margin-top:100px; z-index:-1;"><h1>메인 화면 영역</h1></div>
-	
-	        <!-- 푸터 영역 -->
-        <div class="footer_container">
-
-            <!-- 헤더 ABOUT + 개인정보 보호정책 + 환불 정책 -->
-            <div id="footer_link">
-                <table align="center">
-                    <tr>
-                        <td><a href="">ABOUT</a>&nbsp;&nbsp; | &nbsp;&nbsp;</td>
-                        <td><a href="">개인정보 보호정책</a>&nbsp;&nbsp; | &nbsp;&nbsp;</td>
-                        <td><a href="">환불 정책</a></td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Copyright -->
-            <div id="footer_copyright">
-                © 2022 INSERT COIN Corporation. All rights reserved. <br>
-                대표이사 : 한다은 | 김수빈 | 백성현 | 장하연 | 정혜민 | 최우수
-            </div>
-
-        </div>
-
-    </div>
     
     <script>
     	function loginPage() {
@@ -141,6 +112,10 @@
     	
     	function enrollPage() {
     		location.href = "<%=contextPath %>/enrollForm.me";
+    	}
+    	
+    	function genBoardPage() {
+    		location.href= "<%= contextPath %>/list.bo?currentPage=1";
     	}
     </script>
 
