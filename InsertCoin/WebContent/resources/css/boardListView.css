@@ -276,6 +276,15 @@ div {
     border-bottom : 1px solid;
 }
 
+
+/* 게시글 클릭 효과 */
+.list-area>tbody>tr:hover {
+	background-color :  rgb(232, 183, 34);
+	color : black;
+	font-weight : bold;
+	cursor : pointer;
+}
+
 /* 페이징 바 */
 .pagingBar {
 	text-align : center;

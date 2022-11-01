@@ -259,7 +259,7 @@ div {
 }
 
 /* 게시글 테이블 */
-.list-area {
+.table-area {
     width : 1000px;
     text-align : center;
     line-height : 250%;
@@ -274,7 +274,7 @@ div {
 }
 
 #select_category {
-    height : 30px;
+	height : 350px;
     width : 150px;
     border : 3px;
     border-radius: 5px;

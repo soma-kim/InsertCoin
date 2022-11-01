@@ -26,6 +26,39 @@
 			  		 ORDER BY GEN_NO DESC) A)
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
+	
+	<entry key="selectGameList">
+		SELECT *
+		FROM GAME
+	</entry>
+	
+	<entry key="insertBoard">
+		INSERT INTO GEN_BOARD (GEN_NO
+						 , GEN_CATEGORY
+						 , MEM_NO
+						 , GEN_TITLE
+						 , GEN_CONTENT
+						 , GEN_REGISTER_DATE)
+				VALUES 	  (SEQ_GEN_NO.NEXTVAL
+						 , ?
+						 , ?
+						 , ?
+						 , ?
+						 , SYSDATE)
+	</entry>
+	
+	<entry key="insertAttachment">
+		INSERT INTO ATTACHMENT (ATTACHMENT_NO
+							  , GEN_NO
+							  , ATTACHMENT_NAME
+							  , ATTACHMENT_RENAME
+							  , ATTACHMENT_PATH)
+					 VALUES    (SEQ_ATTACHMENT_NO.NEXTVAL
+							  , SEQ_GEN_NO.CURRVAL
+							  , ?
+							  , ?
+							  , ?)
+	</entry>
 
 
 </properties>

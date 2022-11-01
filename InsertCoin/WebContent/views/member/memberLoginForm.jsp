@@ -2,6 +2,29 @@
     pageEncoding="UTF-8" import="com.insertcoin.member.model.vo.Member" %>
 <%
 	String contextPath = request.getContextPath();
+
+	// 쿠키 불러오기
+	// => request.getCookies() 메소드 => Cookie 타입의 배열로 리턴
+	Cookie[] cookies = request.getCookies();
+	
+	// 배열에 담긴 여러 개의 쿠키 세트들 중에 내가 원하는 쿠키만 골라내는 작업 진행
+	String saveEmail = "";
+	if(cookies != null) {
+		
+		for(int i = 0; i < cookies.length; i++) {
+			
+			// System.out.println(i + " : " + cookies[i].getName() + " / " + cookies[i].getValue());
+			// 서버는 기본적으로 JSSESIONID라는 쿠키를 만들어 줌
+			// 쿠키로부터 name(키값)을 뽑아내려면 getName(), value(밸류값)을 뽑아내려면 getValue() 메소드 이용
+			
+			if(cookies[i].getName().equals("saveEmail")) {
+				saveEmail = cookies[i].getValue();
+				break; // 안 걸어도 상관없지만 쿠키가 많은 경우 해당 쿠키를 찾은 이후로는 굳이 계속 반복 돌면서 낭비할 필요가 없음!
+			}
+		}
+	}
+	
+	// 이 시점 기준으로 "saveId"라는 키값을 가진 쿠키가 있었다면 String 타입으로 saveId라는 변수에 해당 아이디값 자체가 담겨 있을 것!
 %>
 <!DOCTYPE html>
 <html>
@@ -53,22 +76,28 @@
                             <th>이메일</th>
                         </tr>
                         <tr>
-                            <th colspan="3">
+                            <th>
                                 <input type="email" name="memEmail" required>
                             </th>
+                        </tr>
+                        <tr>
+                        	<th id="emailSave">
+								<input type="checkbox" id="saveEmail" name="saveEmail" value="y">
+								<label for="saveEmail">이메일 저장</label>                        		
+                        	</th>
                         </tr>
                         <tr>
                             <th>비밀번호</th>
 
                             </tr>
                         <tr>
-                            <th colspan="3">
+                            <th>
                                 <input type="password" name="memPwd" required>
                             </th>
                         </tr>
                         <tr>
                             <!-- 로그인 버튼 -->
-                            <th colspan="3"><button type="submit">로그인</button></th>
+                            <th><button type="submit">로그인</button></th>
                         </tr>
                     </table>
                     <br>
@@ -86,6 +115,20 @@
         
         
         <script>
+			// 모든 요소들이 화면에 다 로딩된 후 saveEmail이라는 자바 변수에 저장된 값을 불러옴
+			// 이메일 입력창에 value 속성으로 설정해 둘 것 & 아이디 저장하기 체크박스에 체크 수행
+			$(function () {
+			
+				var saveEmail = "<%= saveEmail %>";
+				
+				if(saveEmail != "") { // 쿠키가 있다면
+					
+					$("#login_form input[name=memEmail]").val(saveEmail);
+					$("#saveEmail").attr("checked", true);
+				}
+				
+			});
+			
     		function enrollPage() {
     			location.href = "<%=contextPath %>/enrollForm.me";
     		}

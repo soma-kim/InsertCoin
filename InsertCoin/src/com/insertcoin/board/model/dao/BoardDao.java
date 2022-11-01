@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.insertcoin.board.model.vo.Board;
+import com.insertcoin.common.model.vo.Attachment;
 import com.insertcoin.common.model.vo.PageInfo;
+import com.insertcoin.game.model.vo.Game;
 
 public class BoardDao {
 	
@@ -99,8 +101,102 @@ public class BoardDao {
 			close(pstmt);
 		}
 		
-		
 		return list;
 		
 	}
+	
+	public ArrayList<Game> selectGameList(Connection conn) {
+		
+		// SELECT문 => ResultSet 객체 (여러 행 조회)
+		ArrayList<Game> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectGameList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Game(rset.getInt("GAME_NO"),
+								  rset.getString("GAME_NAME")));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public int insertBoard(Connection conn, Board b) {
+		
+		// insert문 => int (처리된 행 개수)
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			// GEN_CATEGORY / GAME_NO / MEM_NO / GEN_TITLE / GEN_CONTENT
+			// genCategory / gemeNo / memNo / genTitle / genContent
+			pstmt.setString(1, b.getGenCategory());
+			// pstmt.setInt(2, b.getGameNo());
+			pstmt.setInt(2, Integer.parseInt(b.getMemNo()));
+			pstmt.setString(3, b.getGenTitle());
+			pstmt.setString(4, b.getGenContent());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+	
+		return result;
+	
+	}
+	
+	public int insertAttachment(Connection conn, Attachment at) {
+		
+		// INSERT문 => int 처리된 행의 개수
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			// private String attachmentName; // 원본 파일명
+			// private String attachmentRename; // 수정 파일명
+			// private String attachmentPath; // 파일경로
+			
+			pstmt.setString(1, at.getAttachmentName());
+			pstmt.setString(2, at.getAttachmentRename());
+			pstmt.setString(3, at.getAttachmentPath());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		System.out.println(result);
+		
+		return result;
+
+	}
+	
 }

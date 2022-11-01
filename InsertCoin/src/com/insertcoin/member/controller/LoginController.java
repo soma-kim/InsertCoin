@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,6 +44,36 @@ public class LoginController extends HttpServlet {
 	    String memPwd = request.getParameter("memPwd");
 	    // memNickname: 닉네임값 (성공 메시지 표출 때 보여 주고자 함)
 	    String memNickname = request.getParameter("memNickname");
+	    // 이메일 저장
+	    String saveEmail = request.getParameter("saveEmail"); // 체크를 했다면 "y", 하지 않았다면 null 값이 넘어옴
+        
+        if(saveEmail != null && saveEmail.equals("y")) {
+            
+            // 아이디를 저장하겠다
+            // => saveEmail라는 키값으로 넘겨받았던 아이디값을 쿠키로 저장
+            
+            Cookie cookie = new Cookie("saveEmail", memEmail); // "saveId" - "user01"
+            
+            //                     1분          ==        60초
+            //        1시간 ==      60분          ==      60 * 60초
+            // 하루 == 24시간 == 1 * 24 * 60분 == 1 * 24 * 60 * 60초
+            // 이틀 == 48시간 == 2 * 24 * 60분 == 2 * 24 * 60 * 60초
+            cookie.setMaxAge(1 * 24 * 60 * 60); // 만료기간 1일 (초단위 작성)
+            
+            // 쿠키를 브라우저로 넘기기 => 응답 정보에 첨부함 (response 객체 사용)
+            response.addCookie(cookie);
+            
+        } else {
+            
+            // 아이디를 저장하지 않겠다
+            // => 아이디를 저장하고 있었던 쿠키 자체를 삭제
+            // (쿠키를 삭제시키지 않으면 만료일까지 계속 살아 있기 때문)
+            
+            Cookie cookie = new Cookie("saveEmail", memEmail);
+            cookie.setMaxAge(0); // 0초
+            response.addCookie(cookie);
+            
+        }
 	    
 	    // 요청 시 전달값들을 VO 객체로 가공
 	    Member m = new Member();
