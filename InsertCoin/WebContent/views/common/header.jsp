@@ -73,7 +73,7 @@
 	                        <a id="login_menu" onclick="loginPage();">로그인</a>
 	                        <ul>
 	                            <li><a onclick="loginPage();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;로그인</a></li>
-	                            <li><a onclick="enrollPage();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;회원가입</a></li>
+	                            <li><a onclick="enrollPolicyPage();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;회원가입</a></li>
 	                        </ul>
 	                    </li>
                     <% } else { %>
@@ -110,8 +110,8 @@
     		location.href = "<%= contextPath %>/loginForm.me";
     	}
     	
-    	function enrollPage() {
-    		location.href = "<%=contextPath %>/enrollForm.me";
+    	function enrollPolicyPage() {
+    		location.href = "<%=contextPath %>/enrollPolicy.me";
     	}
     	
     	function genBoardPage() {

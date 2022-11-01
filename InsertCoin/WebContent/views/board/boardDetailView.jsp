@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" import="com.insertcoin.board.model.vo.Board, com.insertcoin.common.model.vo.Attachment" %>
 <%
 	// 필요한 데이터 먼저 뽑기
-	Board b= (Board)request.getAttribute("b");
+	Board b = (Board)request.getAttribute("b");
 	// 게시글 번호, 카테고리명, 글 제목, 글 내용, 작성자 아이디, 작성일, 신고 수
 	
 	Attachment at = (Attachment)request.getAttribute("at");
@@ -44,10 +44,10 @@
                         <tbody>
                             <tr class="line">
                                 <td>
-                                    <div class="board_left"><%= b.getMemNo() %></div>
+                                    <div class="board_left">작성자: <b><%= b.getMemNo() %></b></div>
                                 </td>
                                 <td>
-                                    <div class="board_right">조회수 <%= b.getGenViews() %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;신고 <%= b.getReportCount() %></div>
+                                    <div class="board_right">조회수 <%= b.getGenViews() %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;신고 0</div>
                                 </td>
                             </tr>
                             <tr class="line">
@@ -57,7 +57,7 @@
                                     </div>
                                     </td>
                             </tr>
-                            <tr>
+                            <tr class="line">
                             	<th>첨부파일</th>
                             	<td colspan="3">
                             		<% if(at == null) { %>
@@ -72,8 +72,8 @@
                             <tr>
                                 <td colspan="3">
                                     <div>
-	                                    <% if(loginUser != null && loginUser.getMemNo().equals(b.getMemNo())) { %>
-	                                        <button class="table_button">수정</button>
+										<% if(loginUser != null && loginUser.getMemNickname().equals(b.getMemNo())) { %>
+											<button class="table_button">수정</button>
 	                                        <button class="table_button">삭제</button>
 	                                        <button type="button" id="red_board" class="btn btn-primary" data-toggle="modal" data-target="#myReport">신고</button>
 	                                    <% } %>
@@ -104,8 +104,7 @@
                                                 
                                                 <!-- Modal footer -->
                                                 <div class="modal-footer">
-                                                <button class="modal_button button1" type="reset">취소</button>
-                                                <button class="modal_button button2" type="submit">신청</button>
+                                                <button class="modal_button button2" type="submit" data-dismiss="modal" onclick="report();">신청</button>
                                                 </div>
                                                 
                                             </div>
@@ -355,6 +354,10 @@
     <script>
     	function goToList() {
     		location.href = "<%=contextPath %>/list.bo?currentPage=1";
+    	}
+    	
+    	function report() {
+    		alert("신고가 성공적으로 접수되었습니다.");
     	}
     </script>
 

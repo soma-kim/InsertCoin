@@ -47,7 +47,6 @@ public class Attachment {
 		this.noticeNo = noticeNo;
 	}
 	
-	
 	// 메소드부 
 	public int getAttachmentNo() {
 		return attachmentNo;

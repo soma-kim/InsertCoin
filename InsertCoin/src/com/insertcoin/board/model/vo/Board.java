@@ -7,7 +7,7 @@ public class Board {
 	// 필드부
 	private int genNo; // GEN_NO NUMBER PRIMARY KEY,
 	private String genCategory; // GEN_CATEGORY VARCHAR2(10) NOT NULL,
-	private int gameNo; // GAME_NO NUMBER REFERENCES GAME(GAME_NO),
+	private String gameNo; // GAME_NO NUMBER REFERENCES GAME(GAME_NO),
 	private String memNo; // MEM_NO NUMBER NOT NULL REFERENCES MEMBER(MEM_NO),
 	private String genTitle; // GEN_TITLE VARCHAR2(100) NOT NULL,
 	private String genContent; // GEN_CONTENT VARCHAR2(4000) NOT NULL,
@@ -20,7 +20,7 @@ public class Board {
 		super();
 	}
 
-	public Board(int genNo, String genCategory, int gameNo, String memNo, String genTitle, String genContent,
+	public Board(int genNo, String genCategory, String gameNo, String memNo, String genTitle, String genContent,
 			Date genRegister, int genViews, String genShow) {
 		super();
 		this.genNo = genNo;
@@ -35,7 +35,7 @@ public class Board {
 	}
 	
 	// 게시글 메인용 생성자
-	public Board(int genNo, String genCategory, int gameNo, String memNo, String genTitle, Date genRegister,
+	public Board(int genNo, String genCategory, String gameNo, String memNo, String genTitle, Date genRegister,
 			int genViews) {
 		super();
 		this.genNo = genNo;
@@ -46,11 +46,26 @@ public class Board {
 		this.genRegister = genRegister;
 		this.genViews = genViews;
 	}
+	
+	// 일반게시글 상세 조회용 생성자
+	public Board(int genNo, String genCategory, String gameNo, String memNo, String genTitle, String genContent,
+			Date genRegister, int genViews) {
+		super();
+		this.genNo = genNo;
+		this.genCategory = genCategory;
+		this.gameNo = gameNo;
+		this.memNo = memNo;
+		this.genTitle = genTitle;
+		this.genContent = genContent;
+		this.genRegister = genRegister;
+		this.genViews = genViews;
+	}
 
 	// 메소드부
 	public int getGenNo() {
 		return genNo;
 	}
+
 
 	public void setGenNo(int genNo) {
 		this.genNo = genNo;
@@ -64,11 +79,11 @@ public class Board {
 		this.genCategory = genCategory;
 	}
 
-	public int getGameNo() {
+	public String getGameNo() {
 		return gameNo;
 	}
 
-	public void setGameNo(int gameNo) {
+	public void setGameNo(String gameNo) {
 		this.gameNo = gameNo;
 	}
 

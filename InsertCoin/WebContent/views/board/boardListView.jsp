@@ -137,7 +137,7 @@
 		// 게시글에 클릭 버튼 걸기
 		$(function() {
 			$(".list-area>tbody>tr").click(function() {
-				location.href = "<%= contextPath %>/detail.bo?bno=" + $(this).children().eq(0).text();
+				location.href = "<%= contextPath %>/detail.bo?genNo=" + $(this).children().eq(0).text();
 			});
 		});
 	</script>

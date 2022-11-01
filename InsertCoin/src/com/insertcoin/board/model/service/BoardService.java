@@ -84,8 +84,34 @@ public class BoardService {
 		
 		Connection conn = getConnection();
 		
-		int result = new BoardDao().increaseCount()
+		int result = new BoardDao().increaseCount(conn, genNo);
 		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	// Board 정보를 가지고 올 서비스
+	public Board selectBoard(int genNo) {
+		Connection conn = getConnection();
+		Board b = new BoardDao().selectBoard(conn, genNo);
+		
+		close(conn);
+		
+		return b;
+	}
+	
+	// Attachment 정보를 가지고 올 서비스
+	public Attachment selectAttachment(int genNo) {
+		Connection conn = getConnection();
+		Attachment at = new BoardDao().selectAttachment(conn, genNo);
+		
+		close(conn);
+		return at;
 	}
 
 	

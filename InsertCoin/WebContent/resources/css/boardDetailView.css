@@ -285,6 +285,11 @@ div {
     text-align : right;
 }
 
+#board_text {
+	padding : 20px;
+	min-height : 300px;
+}
+
 
 /* 테이블 한 줄마다 줄 긋기 */
 .line {

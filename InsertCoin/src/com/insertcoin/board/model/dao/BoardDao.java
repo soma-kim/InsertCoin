@@ -86,7 +86,7 @@ public class BoardDao {
 				
 				list.add(new Board(rset.getInt("GEN_NO")
 								 , rset.getString("GEN_CATEGORY")
-								 , rset.getInt("GAME_NO")
+								 , rset.getString("GAME_NO")
 								 , rset.getString("MEM_NICKNAME")
 								 , rset.getString("GEN_TITLE")
 								 , rset.getDate("GEN_REGISTER_DATE")
@@ -198,5 +198,106 @@ public class BoardDao {
 		return result;
 
 	}
+	
+	// 조회수 증가용 Dao
+	 public int increaseCount(Connection conn, int genNo) {
+		 
+		 // UPDATE문 => int (처리된 행의 개수)
+		 int result = 0;
+		 PreparedStatement pstmt = null;
+		 
+		 String sql = prop.getProperty("increaseCount");
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, genNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		 
+		 return result;
+		 
+	 }
+	 
+	 // Board 정보용  DAO
+	 public Board selectBoard(Connection conn, int genNo) {
+		 
+		 // SELECT문 => ResultSet 객체 (많아도 1행)
+		 
+		 Board b = null;
+		 PreparedStatement pstmt = null;
+		 ResultSet rset = null;
+		 
+		 String sql = prop.getProperty("selectBoard");
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, genNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				b = new Board(rset.getInt("GEN_NO")
+							, rset.getString("GEN_CATEGORY")
+							, rset.getString("GAME_NAME") // 일단 게임 태그 제외
+							, rset.getString("MEM_NICKNAME")
+							, rset.getString("GEN_TITLE")
+							, rset.getString("GEN_CONTENT")
+							, rset.getDate("GEN_REGISTER_DATE")
+							, rset.getInt("GEN_VIEWS"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		 return b;
+		 
+	 }
+	 
+	 public Attachment selectAttachment(Connection conn, int genNo) {
+		 
+		 // SELECT문 => ResultSet 객체 (1행 조회)
+		 Attachment at = null;
+		 PreparedStatement pstmt = null;
+		 ResultSet rset = null;
+		 
+		 String sql = prop.getProperty("selectAttachment");
+		 
+		 try {
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, genNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				at = new Attachment();
+				at.setAttachmentNo(rset.getInt("ATTACHMENT_NO"));
+				at.setAttachmentName(rset.getString("ATTACHMENT_NAME"));
+				at.setAttachmentRename(rset.getString("ATTACHMENT_RENAME"));
+				at.setAttachmentPath(rset.getString("ATTACHMENT_PATH"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		 return at;
+		  
+	 }
 	
 }
