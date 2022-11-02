@@ -1,17 +1,19 @@
 package com.insertcoin.board.model.service;
 
 import static com.insertcoin.common.JDBCTemplate.close;
+import static com.insertcoin.common.JDBCTemplate.commit;
 import static com.insertcoin.common.JDBCTemplate.getConnection;
+import static com.insertcoin.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.insertcoin.board.model.dao.BoardDao;
 import com.insertcoin.board.model.vo.Board;
+import com.insertcoin.board.model.vo.GenComment;
 import com.insertcoin.common.model.vo.Attachment;
 import com.insertcoin.common.model.vo.PageInfo;
 import com.insertcoin.game.model.vo.Game;
-import static com.insertcoin.common.JDBCTemplate.*;
 
 public class BoardService {
 	
@@ -113,7 +115,72 @@ public class BoardService {
 		close(conn);
 		return at;
 	}
+	
+	// 게시글 수정 서비스
+	public int updateBoard(Board b, Attachment at) {
+		Connection conn = getConnection();
+		
+		// 3가지 경우 모두 공통적으로 실행해야 하는 GEN_BOARD UPDATE 구문
+		int result1 = new BoardDao().updateBoard(conn, b);
+		
+		// 0으로 설정 시 기존 첨부파일 없다면 무조건 false이기 때문에 기본값을 1로 세팅 
+		int result2 = 1;
+		
+		if(at != null) { // 새롭게 첨부된 파일이 있는 경우
+			
+			if(at.getAttachmentNo() != 0) { // 기존 첨부파일도 있다면
 
+				// Attachment 테이블에 update
+				result2 = new BoardDao().updateAttachment(conn, at);
+				
+			} else { // 기존 첨부파일은 없다면
+				
+				// Attachment 테이블에 insert
+				result2 = new BoardDao().insertNewAttachment(conn, at); 
+			}
+			
+		}
+		
+		// 모든 요청이 다 성공했을 경우에만 commit
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result1 * result2;
+	}
+	
+	// 게시글 삭제용 서비스
+	public int deleteBoard(int genNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().deleteBoard(conn, genNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+		
+	}
+	
+	public ArrayList<GenComment> selectGenCommentList(int genNo) {
+		
+		Connection conn = getConnection();
+		ArrayList<GenComment> list = new BoardDao().selectGenCommentList(conn, genNo);
+		
+		close(conn);
+		
+		return list;
+		
+	}
+	
 	
 
 }

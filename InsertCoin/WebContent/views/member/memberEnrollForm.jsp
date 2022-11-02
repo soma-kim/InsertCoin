@@ -40,7 +40,7 @@
                 <div class="enroll_content">
                     <!-- 회원가입 창 로고 -->
                     <div style="text-align:center;">
-                        <img src="resources/image/logo/insertcoin_logo.png" alt="insert_coin_logo" id="enroll_logo">
+                        <img src="resources/image/common/main-logo.png" alt="insert_coin_logo" id="enroll_logo">
                     </div>
                     <!-- 회원가입 글자 -->
                     <div id="enroll_text"><h3>회원가입</h3><hr></div>
@@ -150,7 +150,7 @@
         	function nicknameCheck() {
         		var $memNickname = $("#enroll_table input[name=memNickname]");
         		let nickname = $("#memNickname").val();
-        		let regNickname = /^[a-zA-Z0-9ㄱ-ㅎ가-힣]{2,10}$/;
+        		let regNickname = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,10}$/
         		
         		$.ajax({
         			url : "nicknameCheck.me",
@@ -166,7 +166,7 @@
         					
         				} else {
                 			if(regNickname.test(nickname) == false) {
-            					$("#nicknameCheckOutput").text("닉네임은 2~10자로 한글/영문자/숫자/특수문자()가 포함될 수 있습니다.").css("color","red").css("font-size","12px");
+            					$("#nicknameCheckOutput").text("닉네임은 2~10자로 한글(자음, 모음 별도 금지)/영문자/숫자가 포함될 수 있습니다.").css("color","red").css("font-size","12px");
        						} else {
         						$("#nicknameCheckOutput").text("사용 가능한 닉네임입니다!").css("color","rgb(232, 183, 34)").css("font-size","12px");
         					}
@@ -185,7 +185,7 @@
         		        		
         		let pwd1 = $("#pwd1").val();
         		let pwd2 = $("#pwd2").val();
-        		let regPwd = /^[a-zA-Z0-9]{8,20}$/;
+        		let regPwd = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣!@#$%^&*_-]{8,20}$/;
         		
         		if(pwd1 != "" && pwd2 != "") { // 사용자가 비밀번호, 비밀번호 확인을 모두 입력했다면
         			
@@ -193,7 +193,7 @@
         				$("#pwdCheckOutput").text("비밀번호가 일치하지 않습니다. 다시 확인해 주세요.").css("color","red").css("font-size","12px");
         			} else {
         				if(regPwd.test(pwd2) == false) {
-        					$("#pwdCheckOutput").text("비밀번호는 8~20자로 숫자/영어 대,소문자/특수문자()가 포함될 수 있습니다.").css("color","red").css("font-size","12px");
+        					$("#pwdCheckOutput").text("비밀번호는 8~20자로 숫자/영문자/특수문자(!@#$%^&*)가 포함될 수 있습니다.").css("color","red").css("font-size","12px");
         				} else {
         					$("#pwdCheckOutput").text("비밀번호가 일치합니다!").css("color","rgb(232, 183, 34)").css("font-size","12px");
         				}

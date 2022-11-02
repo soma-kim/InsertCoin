@@ -64,7 +64,7 @@
                 <div class="login_content">
                     <!-- 로그인 창 로고 -->
                     <div style="text-align:center;">
-                        <img src="resources/image/logo/insertcoin_logo.png" alt="insert_coin_logo" id="login_logo">
+                        <img src="resources/image/common/main-logo.png" alt="insert_coin_logo" id="login_logo">
                     </div>
                     <!-- 로그인 글자 -->
                     <div id="login_text"><h2>로그인</h2><hr></div>
@@ -81,19 +81,21 @@
                             </th>
                         </tr>
                         <tr>
-                        	<th id="emailSave">
-								<input type="checkbox" id="saveEmail" name="saveEmail" value="y">
-								<label for="saveEmail">이메일 저장</label>                        		
-                        	</th>
-                        </tr>
-                        <tr>
                             <th>비밀번호</th>
 
-                            </tr>
+                        </tr>
                         <tr>
                             <th>
                                 <input type="password" name="memPwd" required>
                             </th>
+                        </tr>
+                        <tr>
+                        	<th colspan="2">
+                        		<div id="saveEmail" style="display:inline-block;">
+									<input type="checkbox" name="saveEmail" value="y">
+									<label for="saveEmail" style="font-size:13px;">이메일 저장</label>
+								</div>
+                        	</th>
                         </tr>
                         <tr>
                             <!-- 로그인 버튼 -->

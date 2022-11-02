@@ -25,7 +25,7 @@
                 <div class="enroll_content">
                     <!-- 회원가입 창 로고 -->
                     <div style="text-align:center;">
-                        <img src="resources/image/logo/insertcoin_logo.png" alt="insert_coin_logo" id="enroll_logo">
+                        <img src="resources/image/common/main-logo.png" alt="insert_coin_logo" id="enroll_logo">
                     </div>
                     <!-- 회원가입 글자 -->
                     <div id="enroll_text"><h3>회원가입</h3><hr></div>
@@ -45,7 +45,7 @@ INSERT COIN은 이용자들의 개인정보보호를 매우 중요시하며, 이
                         </tr>
                         <tr>
                             <th colspan="2">
-                                <input type="checkbox" id="agreeCheck" name="agreeCheck" checked><label for="agree">개인정보 수집 및 이용에 동의합니다.</label>
+                                <input type="checkbox" id="agreeCheck" name="agreeCheck" checked><label for="agree">&nbsp;개인정보 수집 및 이용에 동의합니다.</label>
                             </th>
                         </tr>
                     </table>

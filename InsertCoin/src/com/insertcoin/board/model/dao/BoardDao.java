@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.insertcoin.board.model.vo.Board;
+import com.insertcoin.board.model.vo.GenComment;
 import com.insertcoin.common.model.vo.Attachment;
 import com.insertcoin.common.model.vo.PageInfo;
 import com.insertcoin.game.model.vo.Game;
@@ -299,5 +300,148 @@ public class BoardDao {
 		 return at;
 		  
 	 }
+	 
+	 public int updateBoard(Connection conn, Board b) {
+		 
+		 // UPDATE 문 => int(처리된 행의 개수)
+		 int result = 0;
+		 PreparedStatement pstmt = null;
+		 
+		 String sql = prop.getProperty("updateBoard");
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			
+			 pstmt.setString(1, b.getGenCategory());
+			 pstmt.setString(2, b.getGenTitle());
+			 pstmt.setString(3, b.getGenContent());
+			 pstmt.setString(4, b.getGameNo());
+			 pstmt.setInt(5, b.getGenNo());
+			 
+			 result = pstmt.executeUpdate();
+			 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		 return result;
+		
+	 }
+	 
+	 public int updateAttachment(Connection conn, Attachment at) {
+		 
+		 // UPDATE => int
+		 
+		 int result = 0;
+		 PreparedStatement pstmt = null;
+		 String sql = prop.getProperty("updateAttachment");
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, at.getAttachmentName());
+			pstmt.setString(2, at.getAttachmentRename());
+			pstmt.setInt(3, at.getAttachmentNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		 
+		 return result;
+		 
+	 }
+	 
+	 public int insertNewAttachment(Connection conn, Attachment at) {
+		 
+		 // INSERT => int
+		 
+		 int result = 0;
+		 PreparedStatement pstmt = null;
+		 
+		 String sql = prop.getProperty("insertNewAttachment");
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, at.getGenNo());
+			pstmt.setString(2, at.getAttachmentName());
+			pstmt.setString(3, at.getAttachmentRename());
+			pstmt.setString(4, at.getAttachmentPath());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		 return result;
+	 }
+	 
+	 public int deleteBoard(Connection conn, int genNo) {
+		 
+		 // UPDATE => int
+		 
+		 int result = 0;
+		 PreparedStatement pstmt = null;
+		 
+		 String sql = prop.getProperty("deleteBoard");
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, genNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		 
+		 System.out.println(result);
+		 
+		 return result;
+	 }
+	 
+	 public ArrayList<GenComment> selectGenCommentList(Connection conn, int genNo) {
+		 
+		 // SELECT문 => ResultSet 객체 (여러 행 조회)
+		 
+		 ArrayList<GenComment> list = new ArrayList<>();
+		 PreparedStatement pstmt = null;
+		 ResultSet rset = null;
+		 
+		 String sql = prop.getProperty("selectGenCommentList");
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);	
+			
+			pstmt.setInt(1, genNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new GenComment(rset.getInt("GEN_COMMENT_NO"),
+										rset.getString("MEM_NO"),
+										rset.getString("GEN_COMMENT_CONTENT"),
+										rset.getString("GEN_COMMENT_REGISTER_DATE")));
+			}                                                                                                                                                       
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		 
+		 return list;
+	 }
+	
 	
 }

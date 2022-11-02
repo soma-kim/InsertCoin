@@ -234,8 +234,8 @@ div {
 #enroll_logo {
     margin-top : 50px;
     margin-bottom : 70px;
-    width : 300px;
-    height : 100px;
+    width : 250px;
+    height : 80px;
 }
 
 /* 회원가입 글자 */
@@ -247,6 +247,7 @@ div {
 /* 회원가입 정보 입력 폼 */
 #enroll_table {
     width : 90%;
+    height : 600px;
     color : black;
     line-height: 250%;
     border-collapse: separate;
