@@ -130,16 +130,27 @@
 		WHERE GEN_NO = ?
 	</entry>
 	
-	<entry key="slectGenCommentList">
+	<entry key="selectGenCommentList">
 		SELECT GEN_COMMENT_NO
 		     , GEN_COMMENT_CONTENT
-		     , M.MEM_EMAIL
-		     , TO_CHAR(GEN_COMMENT_REGISTER_DATE, 'YY/MM/DD HH:MI:SS')
+		     , M.MEM_NICKNAME
+		     , TO_CHAR(GEN_COMMENT_REGISTER_DATE, 'YY/MM/DD HH:MI:SS') GEN_COMMENT_REGISTER_DATE
 		FROM GEN_COMMENT C
 		JOIN MEMBER M ON (C.MEM_NO = M.MEM_NO)
 		WHERE GEN_NO = ?
 		    AND GEN_COMMENT_SHOW = 'Y'
-		ORDER BY GEN_COMMENT_NO DESC;
+		ORDER BY GEN_COMMENT_NO DESC
+	</entry>
+	
+	<entry key="insertGenComment">
+		INSERT INTO GEN_COMMENT (GEN_COMMENT_NO
+							   , GEN_COMMENT_CONTENT
+							   , GEN_NO
+							   , MEM_NO)
+						 VALUES (SEQ_GEN_COMMENT_NO.NEXTVAL
+							   , ?
+							   , ?
+							   , ?)
 	</entry>
 
 

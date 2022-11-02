@@ -427,9 +427,10 @@ public class BoardDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
+				
 				list.add(new GenComment(rset.getInt("GEN_COMMENT_NO"),
-										rset.getString("MEM_NO"),
 										rset.getString("GEN_COMMENT_CONTENT"),
+										rset.getString("MEM_NICKNAME"),
 										rset.getString("GEN_COMMENT_REGISTER_DATE")));
 			}                                                                                                                                                       
 			 
@@ -441,6 +442,33 @@ public class BoardDao {
 		}
 		 
 		 return list;
+	 }
+	  
+	 public int insertGenComment(Connection conn, GenComment gc) {
+		 
+		 // INSERT문 => int (처리된 행의 개수)
+		 
+		 int result = 0;
+		 PreparedStatement pstmt = null;
+		 
+		 String sql = prop.getProperty("insertGenComment");	
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1,gc.getGenCommentContent());
+			pstmt.setInt(2, gc.getGenNo());
+			pstmt.setInt(3, Integer.parseInt(gc.getMemNo()));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		 
+		 return result;
 	 }
 	
 	

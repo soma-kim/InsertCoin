@@ -338,20 +338,20 @@ div {
 }
 
 .comment_info1 {
-    width : 700px;
+    width : 600px;
     display : inline-block;
     font-weight: bold;
     padding : 0px;
 }
 
 .comment_info2 {
-    width : 150px;
+    width : 250px;
     display : inline-block;
     text-align : right;
     font-weight: bold;
 }
 
-#comment_info3 {
+.comment_info3 {
     width : 60px;
     float: right;
     background-color: rgb(231, 76, 60);

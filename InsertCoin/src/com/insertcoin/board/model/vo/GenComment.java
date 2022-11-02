@@ -4,9 +4,9 @@ public class GenComment {
 	
 	// 필드부
 	private int genCommentNo;
+	private String genCommentContent;
 	private int genNo;
 	private String memNo;
-	private String genCommentContent;
 	private String genCommentRegister;
 	private String genCommentShow;
 	
@@ -15,23 +15,23 @@ public class GenComment {
 		super();
 	}
 
-	public GenComment(int genCommentNo, int genNo, String memNo, String genCommentContent, String genCommentRegister,
+	public GenComment(int genCommentNo, String genCommentContent, int genNo, String memNo, String genCommentRegister,
 			String genCommentShow) {
 		super();
 		this.genCommentNo = genCommentNo;
+		this.genCommentContent = genCommentContent;
 		this.genNo = genNo;
 		this.memNo = memNo;
-		this.genCommentContent = genCommentContent;
 		this.genCommentRegister = genCommentRegister;
 		this.genCommentShow = genCommentShow;
 	}
 	
 	// 댓글 리스트 조회용 생성자
-	public GenComment(int genCommentNo, String memNo, String genCommentContent, String genCommentRegister) {
+	public GenComment(int genCommentNo, String genCommentContent, String memNo, String genCommentRegister) {
 		super();
 		this.genCommentNo = genCommentNo;
-		this.memNo = memNo;
 		this.genCommentContent = genCommentContent;
+		this.memNo = memNo;
 		this.genCommentRegister = genCommentRegister;
 	}
 

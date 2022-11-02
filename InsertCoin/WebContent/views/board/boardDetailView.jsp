@@ -117,7 +117,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <div id="comment_count">댓글 2개</div>
+                                    <div id="comment_count"></div>
                                 </td>
                             </tr>
                         </tbody>
@@ -146,46 +146,107 @@
                             <td>어디보자... 점점 구색을 갖추는듯하나 아직 고칠 게 많아 보입니다 ^^</td>
                         </tr>
                         -->
+                        <thead>
+                        </thead>
                         
-                        <% if(loginUser != null) { %>
-                        <!-- 로그인이 되어 있을 경우 -->
-                        <tr>
-                            <td colspan="4">
-                                <div class=comment_container> 댓글쓰기 <br>
-                                    <textarea class="comment_textarea" placeholder="명예훼손, 개인정보 유출, 분쟁 유발, 허위사실 유포 등의 글은 이용약관에 의해 제재는 물론 법률에 의해 처벌받을 수 있습니다. 건전한 커뮤니티를 위해 자제를 당부드립니다."></textarea>
-                                    <button id="comment_submit" onclick="insertGenComment();">등록</button>
-                                </div>    
-                                
-                            </td>
-                        </tr>
-                        <% } else { %>
-                        <!-- 로그인이 되어 있지 않다면 -->
-                        <tr>
-                            <td colspan="4">
-                                <div class=comment_container> 댓글쓰기 <br>
-                                    <textarea class="comment_textarea" readonly">로그인 후 이용해 주세요.</textarea>
-                                    <button id="comment_submit" disabled>등록</button>
-                                </div>    
-                                
-                            </td>
-                        </tr>
-                        <% } %>
+                       <tbody>
+	                        <% if(loginUser != null) { %>
+	                        <!-- 로그인이 되어 있을 경우 -->
+	                        <tr>
+	                            <td colspan="4">
+	                                <div class=comment_container> 댓글쓰기 <br>
+	                                    <textarea class="comment_textarea" id="genCommentContent" placeholder="명예훼손, 개인정보 유출, 분쟁 유발, 허위사실 유포 등의 글은 이용약관에 의해 제재는 물론 법률에 의해 처벌받을 수 있습니다. 건전한 커뮤니티를 위해 자제를 당부드립니다."></textarea>
+	                                    <button id="comment_submit" onclick="insertGenComment();">등록</button>
+	                                </div>    
+	                                
+	                            </td>
+	                        </tr>
+	                        <% } else { %>
+	                        <!-- 로그인이 되어 있지 않다면 -->
+	                        <tr>
+	                            <td colspan="4">
+	                                <div class=comment_container> 댓글쓰기 <br>
+	                                    <textarea class="comment_textarea" readonly">로그인 후 이용해 주세요.</textarea>
+	                                    <button id="comment_submit" disabled>등록</button>
+	                                </div>    
+	                                
+	                            </td>
+	                        </tr>
+	                        <% } %>
+                        </tbody> 
                     </table>
   
-                    <br><br>
-                    <!-- 페이징바 -->
-                    <div align="center" class="paging-area">
-                    <button>1</button>
-                    <button>2</button>
-                    <button>3</button>
-                    <button>4</button>
-                    <button>5</button>
-                    <button>6</button>
-                    <button>7</button>
-                    <button>8</button>
-                    <button>9</button>
-                    <button>10</button>
-                    </div>
+                    <script>
+                    
+                    	$(function() {
+                    		selectGenCommentList();
+                    		
+                    		// 1초 간격마다 selectGenCommentList 함수 실행
+                    		setInterval(selectGenCommentList, 1000);
+                    	});
+                    	
+                    	function insertGenComment() {
+                    		$.ajax({
+                    			url : "gcinsert.bo",
+                    			data : {content : $("#genCommentContent").val(),
+                    					genNo :	<%= b.getGenNo() %>
+                    			},
+                    			type : "post",
+                    			success : function(result) {
+                    				
+                    				// result에 댓글 작성 성공 시 1, 실패 시 0
+                    				if(result > 0) {
+                    					// 갱신된 댓글 리스트 조회
+                    					selectGenCommentList();
+                    					
+                    					// textarea 새로고침하지 않아도 초기화 효과
+                    					$("#genCommentContent").val("");
+                    				} else {
+                    					alert("댓글 작성에 실패했습니다.")
+                    				}
+                    				
+                    			},
+                    			erroe : function() {
+                    				console.log("댓글 작성용 ajax 통신 실패!");
+                    			}
+                    		});
+                    	}
+                    
+                    	function selectGenCommentList() {
+                    		
+                    		$.ajax({
+                    			url : "gclist.bo",
+                    			data : {genNo : <%= b.getGenNo() %>},
+                    			success : function(list) {
+                    				
+                    				// console.log(list);
+                    				
+                    				var result1 = "";
+                    				for (var i in list) { // i: 0, 1, 2, 3, ..., 마지막 인덱스값
+                    					
+                    					result1 += "<tr>"
+                    							// + 	"<td rowspan='2' width='5%'><img src="resources/image/profile/profile_default.png" id="profile_photo"></td>"
+                    							+ 	"<td colspan='2'><div class='comment_info1'>" + list[i].memNo + "</div></td>"
+                    							+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
+                    							+ 	"<td><button class='comment_info3 btn btn-danger' data-toggle='modal' data-target='#myReport'>신고</button></td></tr>"
+                    							+ 	"<tr class='line'><td>" + list[i].genCommentContent + "</td></tr>"
+                    				}
+                    				
+                    				$(".comment_table thead").html(result1);
+                    				
+                    				var result2 = list.length;
+                    				
+                    				$("#comment_count").text("댓글  " + result2 + "개");
+                    				
+                    			},
+                    			error : function() {
+                    				console.log("댓글 리스트 조회용 ajax 통신 실패");
+                    			}
+                    		});
+                    		
+                    	}
+                    
+                    </script>
                 </div>
                 
         </div>
@@ -201,8 +262,9 @@
     		alert("신고가 성공적으로 접수되었습니다.");
     	}
     </script>
+    
+    <%@ include file = "../../views/common/footer.jsp" %>
 
 </body>
 
-</body>
 </html>

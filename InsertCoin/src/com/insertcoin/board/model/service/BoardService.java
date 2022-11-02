@@ -181,6 +181,20 @@ public class BoardService {
 		
 	}
 	
+	public int insertGenComment(GenComment gc) {
+		Connection conn = getConnection();
+		int result = new BoardDao().insertGenComment(conn, gc);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
 	
 
 }
