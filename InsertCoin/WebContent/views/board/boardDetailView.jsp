@@ -47,7 +47,7 @@
                                     <div class="board_left">작성자: <b><%= b.getMemNo() %></b></div>
                                 </td>
                                 <td>
-                                    <div class="board_right">조회수 <%= b.getGenViews() %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;신고 0</div>
+                                    <div class="board_right">조회수 <%= b.getGenViews() %></div>
                                 </td>
                             </tr>
                             <tr class="line">
@@ -166,7 +166,7 @@
 	                        <tr>
 	                            <td colspan="4">
 	                                <div class=comment_container> 댓글쓰기 <br>
-	                                    <textarea class="comment_textarea" readonly">로그인 후 이용해 주세요.</textarea>
+	                                    <textarea class="comment_textarea" readonly>로그인 후 이용해 주세요.</textarea>
 	                                    <button id="comment_submit" disabled>등록</button>
 	                                </div>    
 	                                
@@ -183,10 +183,6 @@
                     		
                     		// 1초 간격마다 selectGenCommentList 함수 실행
                     		setInterval(selectGenCommentList, 1000);
-                    		
-                    		for(var j in list) {
-                        		if(loginUser == list[j].memNo) {}
-                    		}
 
                     	});
                     	
@@ -224,11 +220,15 @@
                     			data : {genNo : <%= b.getGenNo() %>},
                     			success : function(list) {
                     				
-                    				// console.log(list);
+                    				//console.log(list);
+                    				
+                    				// 최신 댓글이 아래로 가게 하고 싶어서 추가함
+                    				list = list.reverse();
                     				
                     				var result1 = "";
                     				for (var i in list) { // i: 0, 1, 2, 3, ..., 마지막 인덱스값
                     					
+										<% if(loginUser != null && loginUser.getMemNickname().equals(b.getMemNo())) { %> // 여기 안 걸림 ㅠㅠ
                     					result1 += "<tr>"
                     							// + 	"<td rowspan='2' width='5%'><img src="resources/image/profile/profile_default.png" id="profile_photo"></td>"
                     							+ 	"<td><div class='comment_info1'>" + list[i].memNo + "</div></td>"
@@ -236,9 +236,31 @@
                     							+ 	"<td><button class='comment_info3 btn btn-danger' data-toggle='modal' data-target='#myReport'>신고</button></td></tr>"
                     							+ 	"<tr><td><div class='comment_info4'>" + list[i].genCommentContent + "</td>"
                     							+   "<td colspan='2'><div><button class='comment_button' onclick='gcUpdate();'>수정</button>&nbsp;|&nbsp;<button class='comment_button' onclick='gcDelete();'>삭제</button></div></div></td></tr>"
-                    							+   "<tr><td colspan='4' class='line'></td></tr>"
-                    							
+                    							+   "<tr><td colspan='4' class='line'><input type='hidden' name='gcNo' value='list.[i].genCommentNo'><input type='hidden' name='genNo' value='list.[i].genGenNo'></td></tr>";
+                    					// 찍히긴 하는데... 1초마다 우루루... NumberFormatException: null
+                    					// console.log(list[i].genCommentNo);
+                    					// console.log(list[i].genNo);
+                    					
+                    					 <% } else if(loginUser != null && !(loginUser.getMemNickname().equals(b.getMemNo()))) { %> // 로그인 하면 여기 걸림
+                    					
+                    					result1 += "<tr>"
+                    							// + 	"<td rowspan='2' width='5%'><img src="resources/image/profile/profile_default.png" id="profile_photo"></td>"
+                    							+ 	"<td><div class='comment_info1'>" + list[i].memNo + "</div></td>"
+                    							+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
+                    							+ 	"<td><button class='comment_info3 btn btn-danger' data-toggle='modal' data-target='#myReport'>신고</button></td></tr>"
+                    							+ 	"<tr><td><div class='comment_info4'>" + list[i].genCommentContent + "</td>"
+                    							+   "<tr><td colspan='4' class='line'><input type='hidden' name='gcNo' value='list.[i].genCommentNo'><input type='hidden' name='genNo' value='list.[i].genGenNo'></td></tr>";
+                    					<% } else { %> // 로그인 안 하면 여기 걸림
+                    					
+                    					result1 += "<tr>"
+                							// + 	"<td rowspan='2' width='5%'><img src="resources/image/profile/profile_default.png" id="profile_photo"></td>"
+                							+ 	"<td><div class='comment_info1'>" + list[i].memNo + "</div></td>"
+                							+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
+                							+ 	"<tr class='line'><td><div class='comment_info4'>" + list[i].genCommentContent + "</td></tr>"
+                    					
+                    					<% } %>
                     				}
+                    				
                     				
                     				$(".comment_table thead").html(result1);
                     				

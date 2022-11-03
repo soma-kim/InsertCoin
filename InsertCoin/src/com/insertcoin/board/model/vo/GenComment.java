@@ -27,9 +27,10 @@ public class GenComment {
 	}
 	
 	// 댓글 리스트 조회용 생성자
-	public GenComment(int genCommentNo, String genCommentContent, String memNo, String genCommentRegister) {
+	public GenComment(int genCommentNo, int genNo, String genCommentContent, String memNo, String genCommentRegister) {
 		super();
 		this.genCommentNo = genCommentNo;
+		this.genNo = genNo;
 		this.genCommentContent = genCommentContent;
 		this.memNo = memNo;
 		this.genCommentRegister = genCommentRegister;

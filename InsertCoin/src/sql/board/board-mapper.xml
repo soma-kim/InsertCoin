@@ -9,6 +9,46 @@
 		WHERE GEN_SHOW = 'Y'
 	</entry>
 	
+	<entry key="selectListCountAll">
+		SELECT COUNT(*) COUNT
+		FROM GEN_BOARD
+		WHERE GEN_SHOW = 'Y'
+		  AND GEN_TITLE LIKE '%' || ? || '%'
+		   OR GEN_CONTENT LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="selectListCountTitle">
+		SELECT COUNT(*) COUNT
+		FROM GEN_BOARD
+		WHERE GEN_SHOW = 'Y'
+		  AND GEN_TITLE LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="selectListCountContent">
+		SELECT COUNT(*) COUNT
+		FROM GEN_BOARD
+		WHERE GEN_SHOW = 'Y'
+		  AND GEN_CONTENT LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="selectListCountWriter">
+		SELECT COUNT(*) COUNT, MEM_NICKNAME
+		FROM GEN_BOARD G
+		LEFT JOIN MEMBER M ON (G.MEM_NO = M.MEM_NO)
+		WHERE GEN_SHOW = 'Y'
+		  AND MEM_NICKNAME LIKE '%' || ? || '%'
+          GROUP BY MEM_NICKNAME
+	</entry>
+	
+	<entry key="selectListCountComment">
+		SELECT COUNT(*) COUNT, GEN_CONTENT
+		FROM GEN_BOARD G
+        LEFT JOIN GEN_COMMENT C ON (G.GEN_NO = C.GEN_NO)
+		WHERE GEN_SHOW = 'Y'
+		  AND GEN_CONTENT LIKE '%' || ? || '%'
+          GROUP BY GEN_CONTENT
+	</entry>
+	
 	<entry key="selectList">
 		SELECT *
 		FROM (SELECT ROWNUM RNUM, A.*
@@ -24,6 +64,98 @@
 			  		 JOIN MEMBER M ON (B.MEM_NO = M.MEM_NO) 
 			  		 WHERE GEN_SHOW = 'Y'
 			  		 ORDER BY GEN_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectBoardListAll">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, A.*
+		        FROM (SELECT GEN_NO
+			  			 , GEN_CATEGORY
+			  			 , G.GAME_NO
+			  			 , M.MEM_NICKNAME
+			  			 , GEN_TITLE
+			  			 , GEN_REGISTER_DATE
+			  			 , GEN_VIEWS
+		              FROM GEN_BOARD G
+			  		  LEFT JOIN MEMBER M ON (G.MEM_NO = M.MEM_NO)
+		              WHERE GEN_SHOW = 'Y'
+		                AND (GEN_TITLE LIKE '%' || ? || '%'
+		                 OR GEN_CONTENT LIKE '%' || ? || '%')
+		              ORDER BY GEN_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectBoardListTitle">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, A.*
+		        FROM (SELECT GEN_NO
+			  			 , GEN_CATEGORY
+			  			 , G.GAME_NO
+			  			 , MEM_NICKNAME
+			  			 , GEN_TITLE
+			  			 , GEN_REGISTER_DATE
+			  			 , GEN_VIEWS
+			  		  FROM GEN_BOARD G
+			  		  LEFT JOIN MEMBER M ON (G.MEM_NO = M.MEM_NO)
+		              WHERE GEN_SHOW = 'Y'
+		                AND GEN_TITLE LIKE '%' || ? || '%'
+		              ORDER BY GEN_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectBoardListContent">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, A.*
+		        FROM (SELECT GEN_NO
+			  			 , GEN_CATEGORY
+			  			 , G.GAME_NO
+			  			 , MEM_NICKNAME
+			  			 , GEN_TITLE
+			  			 , GEN_REGISTER_DATE
+			  			 , GEN_VIEWS
+			  		  FROM GEN_BOARD G
+			  		  LEFT JOIN MEMBER M ON (G.MEM_NO = M.MEM_NO)
+		              WHERE GEN_SHOW = 'Y'
+		                AND GEN_CONTENT LIKE '%' || ? || '%'
+		              ORDER BY GEN_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectBoardListWriter">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, A.*
+		        FROM (SELECT GEN_NO
+			  			 , GEN_CATEGORY
+			  			 , G.GAME_NO
+			  			 , M.MEM_NICKNAME
+			  			 , GEN_TITLE
+			  			 , GEN_REGISTER_DATE
+			  			 , GEN_VIEWS
+		  			  FROM GEN_BOARD G
+			  		  LEFT JOIN MEMBER M ON (G.MEM_NO = M.MEM_NO)
+		              WHERE GEN_SHOW = 'Y'
+		                AND M.MEM_NICKNAME LIKE '%' || ? || '%'
+		              ORDER BY GEN_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectBoardListComment">
+        SELECT *
+		FROM (SELECT ROWNUM RNUM, A.*
+		        FROM (SELECT G.GEN_NO
+			  			 , GEN_CATEGORY
+			  			 , G.GAME_NO
+			  			 , M.MEM_NICKNAME
+			  			 , GEN_TITLE
+			  			 , GEN_REGISTER_DATE
+			  			 , GEN_VIEWS
+		              FROM GEN_BOARD G
+			  		  LEFT JOIN GEN_COMMENT C ON (G.GEN_NO = C.GEN_NO)
+                      LEFT JOIN MEMBER M ON (C.MEM_NO = M.MEM_NO)
+		              WHERE GEN_SHOW = 'Y'
+		                AND GEN_COMMENT_CONTENT LIKE '%' || ? || '%'
+		              ORDER BY GEN_NO DESC) A)
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
@@ -132,6 +264,7 @@
 	
 	<entry key="selectGenCommentList">
 		SELECT GEN_COMMENT_NO
+			 , GEN_NO
 		     , GEN_COMMENT_CONTENT
 		     , M.MEM_NICKNAME
 		     , TO_CHAR(GEN_COMMENT_REGISTER_DATE, 'YY/MM/DD HH:MI:SS') GEN_COMMENT_REGISTER_DATE
@@ -152,6 +285,13 @@
 							   , ?
 							   , ?)
 	</entry>
+	
+	<entry key="deleteComment">
+		UPDATE GEN_BOARD_COMMENT
+			SET GEN_SHOW = 'N'
+		WHERE GEN_NO = ?
+	</entry>
+
 
 
 </properties>

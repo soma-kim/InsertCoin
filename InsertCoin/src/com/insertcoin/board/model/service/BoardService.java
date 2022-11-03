@@ -13,6 +13,8 @@ import com.insertcoin.board.model.vo.Board;
 import com.insertcoin.board.model.vo.GenComment;
 import com.insertcoin.common.model.vo.Attachment;
 import com.insertcoin.common.model.vo.PageInfo;
+import com.insertcoin.cs.model.dao.NoticeDao;
+import com.insertcoin.cs.model.vo.Notice;
 import com.insertcoin.game.model.vo.Game;
 
 public class BoardService {
@@ -26,6 +28,67 @@ public class BoardService {
 		return listCount;
 	}
 	
+	// 제목+내용 검색결과 개수 조회용 
+	public int selectListCountAll(String searchWord) {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new BoardDao().selectListCountAll(conn, searchWord);
+		
+		close(conn);
+		
+		return listCount;
+	}
+	
+	// 제목 검색결과 개수 조회용 
+	public int selectListCountTitle(String searchWord) {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new BoardDao().selectListCountTitle(conn, searchWord);
+		
+		close(conn);
+		
+		return listCount;
+	}
+	
+	// 내용 검색결과 개수 조회용 
+	public int selectListCountContent(String searchWord) {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new BoardDao().selectListCountContent(conn, searchWord);
+		
+		close(conn);
+		
+		return listCount;
+	}
+	
+	// 작성자 검색결과 개수 조회용 
+	public int selectListCountWriter(String searchWord) {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new BoardDao().selectListCountWriter(conn, searchWord);
+		
+		close(conn);
+		
+		return listCount;
+	}
+	
+	// 댓글 검색결과 개수 조회용 
+	public int selectListCountComment(String searchWord) {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new BoardDao().selectListCountComment(conn, searchWord);
+		
+		close(conn);
+		
+		return listCount;
+	}
+	
+	// 게시판 전체 조회용
 	public ArrayList<Board> selectList(PageInfo pi) {
 		
 		Connection conn = getConnection();
@@ -35,6 +98,20 @@ public class BoardService {
 		
 		return list;
 		
+	}
+	
+	// 게시판 검색 조회용 
+	public ArrayList<Board> selectList(PageInfo pi, String searchCategory, String searchWord) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectList(conn, pi, searchCategory, searchWord);
+		
+		// 트랜잭션 처리 패스 
+		
+		close(conn);
+		
+		return list;
 	}
 	
 	public ArrayList<Game> selectGameList() {
@@ -181,6 +258,7 @@ public class BoardService {
 		
 	}
 	
+	// 댓글 작성용
 	public int insertGenComment(GenComment gc) {
 		Connection conn = getConnection();
 		int result = new BoardDao().insertGenComment(conn, gc);
@@ -191,6 +269,22 @@ public class BoardService {
 			rollback(conn);
 		}
 		close(conn);
+		
+		return result;
+	}
+	
+	// 댓글 삭제용
+	public int deleteComment(int gcNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().deleteComment(conn, gcNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		
 		return result;
 	}

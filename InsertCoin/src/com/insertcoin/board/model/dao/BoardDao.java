@@ -15,6 +15,7 @@ import com.insertcoin.board.model.vo.Board;
 import com.insertcoin.board.model.vo.GenComment;
 import com.insertcoin.common.model.vo.Attachment;
 import com.insertcoin.common.model.vo.PageInfo;
+import com.insertcoin.cs.model.vo.Notice;
 import com.insertcoin.game.model.vo.Game;
 
 public class BoardDao {
@@ -62,6 +63,160 @@ public class BoardDao {
 
 	}
 	
+	// 제목+내용 검색결과 개수 조회용 
+	public int selectListCountAll(Connection conn, String searchWord) {
+		
+		// SELECT 문 => ResultSet 객체 (그룹함수를 써서 한 행 조회)
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListCountAll");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, searchWord);
+			pstmt.setString(2, searchWord);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+	
+	// 제목 검색결과 개수 조회용 
+	public int selectListCountTitle(Connection conn, String searchWord) {
+		
+		// SELECT 문 => ResultSet 객체 (그룹함수를 써서 한 행 조회)
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListCountTitle");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, searchWord);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+	
+	// 내용 검색결과 개수 조회용
+	public int selectListCountContent(Connection conn, String searchWord) {
+		
+		// SELECT 문 => ResultSet 객체 (그룹함수를 써서 한 행 조회)
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListCountContent");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, searchWord);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+	
+	// 작성자 검색결과 개수 조회용
+	public int selectListCountWriter(Connection conn, String searchWord) {
+		
+		// SELECT 문 => ResultSet 객체 (그룹함수를 써서 한 행 조회)
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListCountContent");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, searchWord);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+	
+	// 댓글 검색결과 개수 조회용
+	public int selectListCountComment(Connection conn, String searchWord) {
+		
+		// SELECT 문 => ResultSet 객체 (그룹함수를 써서 한 행 조회)
+		
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListCountContent");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, searchWord);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+	
+	// 게시글 전체 조회용
 	public ArrayList<Board> selectList(Connection conn, PageInfo pi) {
 		
 		// SELECT문 => ResultSet 객체 (여러 행 조회)
@@ -104,6 +259,74 @@ public class BoardDao {
 		
 		return list;
 		
+	}
+	
+	// 게시글 검색 조회용
+	public ArrayList<Board> selectList(Connection conn, PageInfo pi, String searchCategory, String searchWord) {
+		
+		// SELECT 문 => ResultSet 객체 (여러 행 조회)
+		
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectList");
+		
+		if(searchCategory != null && searchCategory.equals("searchAll")) { // 제목+내용 검색 
+			sql = prop.getProperty("selectBoardListAll");
+		} else if(searchCategory != null && searchCategory.equals("searchTitle")) { // 제목 검색 
+			sql = prop.getProperty("selectBoardListTitle");
+		} else if(searchCategory != null && searchCategory.equals("searchContent")) { // 내용 검색 
+			sql = prop.getProperty("selectBoardListContent");
+		} else if(searchCategory != null && searchCategory.equals("searchWriter")) { // 내용 검색 
+			sql = prop.getProperty("selectBoardListWriter");
+		} else if(searchCategory != null && searchCategory.equals("searchComment")) { // 내용 검색 
+			sql = prop.getProperty("selectBoardListComment");
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage()	- 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			if(searchCategory != null && searchCategory.equals("searchAll")) {
+				pstmt.setString(1, searchWord);
+				pstmt.setString(2, searchWord);
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, endRow);
+				
+			} else if(searchCategory != null && searchCategory.equals("searchTitle") || (searchCategory != null && searchCategory.equals("searchContent")) || (searchCategory != null && searchCategory.equals("searchWriter")) || (searchCategory != null && searchCategory.equals("searchComment"))) {
+				pstmt.setString(1, searchWord);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+				
+			} else {
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+			}
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Board(rset.getInt("GEN_NO")
+						 , rset.getString("GEN_CATEGORY")
+						 , rset.getString("GAME_NO")
+						 , rset.getString("MEM_NICKNAME")
+						 , rset.getString("GEN_TITLE")
+						 , rset.getDate("GEN_REGISTER_DATE")
+						 , rset.getInt("GEN_VIEWS")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		} 
+		
+		return list;
 	}
 	
 	public ArrayList<Game> selectGameList(Connection conn) {
@@ -429,6 +652,7 @@ public class BoardDao {
 			while(rset.next()) {
 				
 				list.add(new GenComment(rset.getInt("GEN_COMMENT_NO"),
+										rset.getInt("GEN_NO"),
 										rset.getString("GEN_COMMENT_CONTENT"),
 										rset.getString("MEM_NICKNAME"),
 										rset.getString("GEN_COMMENT_REGISTER_DATE")));
@@ -444,6 +668,7 @@ public class BoardDao {
 		 return list;
 	 }
 	  
+	 // 댓글 작성용
 	 public int insertGenComment(Connection conn, GenComment gc) {
 		 
 		 // INSERT문 => int (처리된 행의 개수)
@@ -470,6 +695,32 @@ public class BoardDao {
 		 
 		 return result;
 	 }
-	
-	
+	 
+	 // 댓글 삭제용
+	 public int deleteComment(Connection conn, int gcNo) {
+		 
+		// UPDATE => int
+		 
+		 int result = 0;
+		 PreparedStatement pstmt = null;
+		 
+		 String sql = prop.getProperty("deleteComment");
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, gcNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		 
+		 return result;
+		 
+	 }
+
 }

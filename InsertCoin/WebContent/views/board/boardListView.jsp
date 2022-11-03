@@ -78,6 +78,7 @@
 	                        </tbody>
 	                    </table>
 	                    <br>
+	                    	<!-- 댓글 쓰기는 로그인한 유저만 할 수 있도록 -->
 		                    <% if(loginUser != null) { %>
 		                    	<br>
 			                    <div class="board_search board_left">
@@ -86,15 +87,15 @@
 		                    <% } %>
 	                		<form id="search-form" action="<%= contextPath %>/list.bo?currnetPage=1" method="get" name="searchForm">
 			                    <div class="board_search board-right">
-			                        <select name="category" class="board_search">
-			                            <!-- <option selected>제목+내용</option> -->
-			                            <option value="title">제목</option>
-			                            <option value="content">내용</option>
-			                            <option value="writer">작성자</option>
-			                            <!-- <option value="40">댓글</option> -->
+			                        <select name="searchCategory" class="board_search">
+			                            <option value="searchAll" selected>제목+내용</option>
+			                            <option value="searchTitle">제목</option>
+			                            <option value="searchContent">내용</option>
+			                            <option value="searchWriter">작성자</option>
+										<option value="searchComment" >댓글</option>
 			                            <!-- <option value="50">게임명</option> -->
 			                        </select>
-			                        <input type="text" name="searchContent" id="searchContent">
+			                        <input type="text" name="searchWord" id="searchContent"  placeholder="검색어를 입력하세요.">
 			                        <button type="submit" class="board_button">검색</button>
 			                        <input type="hidden" name="currentPage" value="1">
 			                    </div>

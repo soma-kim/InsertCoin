@@ -62,7 +62,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="" class="main_menu">고객센터</a>
+                        <a onclick="noticePage();" class="main_menu">고객센터</a>
                         <ul>
                             <li><a href="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;공지사항</a></li>
                             <li><a href="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FAQ</a></li>
@@ -116,6 +116,10 @@
     	
     	function genBoardPage() {
     		location.href= "<%= contextPath %>/list.bo?currentPage=1";
+    	}
+    	
+    	function noticePage() {
+    		location.href = "<%= contextPath %>/list.no?currentPage=1";
     	}
     </script>
 

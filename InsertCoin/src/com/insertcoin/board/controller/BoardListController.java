@@ -34,11 +34,8 @@ public class BoardListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String category = request.getParameter("category");
-		String searchContent = request.getParameter("searchContent");
-		
-		System.out.println(category);
-		System.out.println(searchContent);
+		String searchCategory = request.getParameter("searchCategory");
+		String searchWord = request.getParameter("searchWord");
 		
 		// 페이징 처리
 		int listCount; 	 // 현재 총 게시글 개수
@@ -52,14 +49,18 @@ public class BoardListController extends HttpServlet {
 		
 		// listcount : 총 게시글 개수
 				// 검색 카테고리 선택, 게시글 개수 조회용 
-				if(category != null && category.equals("title")) { // 제목+내용 으로 검색할 때 
-					listCount = new NoticeService().selectListCountAll(searchContent);
-				} else if(category != null && category.equals("content")) { // 제목 으로 검색할 때 
-					listCount = new NoticeService().selectListCountTitle(searchContent);
-				} else if(category != null && category.equals("writer")) { // 내용 으로 검색할 때 
-					listCount = new NoticeService().selectListCountContent(searchContent);
+				if(searchCategory != null && searchCategory.equals("searchAll")) { // 제목+내용 으로 검색할 때 
+					listCount = new BoardService().selectListCountAll(searchWord);
+				} else if(searchCategory != null && searchCategory.equals("searchTitle")) { // 제목으로 검색할 때 
+					listCount = new BoardService().selectListCountTitle(searchWord);
+				} else if(searchCategory != null && searchCategory.equals("searchContent")) { // 내용으로 검색할 때 
+					listCount = new BoardService().selectListCountContent(searchWord);
+				} else if(searchCategory != null && searchCategory.equals("searchWriter")) { // 작성자로 검색할 때 
+					listCount = new BoardService().selectListCountWriter(searchWord);
+				} else if(searchCategory != null && searchCategory.equals("searchComment")) { // 댓글로 검색할 때 
+					listCount = new BoardService().selectListCountComment(searchWord);
 				} else { // 전체 조회 기본 페이지 
-					listCount = new NoticeService().selectListCount();
+					listCount = new BoardService().selectListCount();
 				}
 		
 		// 현재 페이지
@@ -89,12 +90,26 @@ public class BoardListController extends HttpServlet {
 		
 		// pi를 서비스로 넘기기
 		// list에는 해당 페이지에서 보여져야 할 게시글의 목록들
-		ArrayList<Board> list = new BoardService().selectList(pi);
+		ArrayList<Board> list = new BoardService().selectList(pi, searchCategory, searchWord);
 		
-		request.setAttribute("pi", pi);
-		request.setAttribute("list", list);
+		// 응답페이지에서 필요로 하는 데이터를 request 영역에 담기 
 		
-		request.getRequestDispatcher("views/board/boardListView.jsp").forward(request, response);
+		// 게시글 조회용 
+		if(searchCategory != null && searchWord != null) {
+			list = new BoardService().selectList(pi, searchCategory, searchWord);
+		} else {
+			list = new BoardService().selectList(pi);
+		}
+		
+		if(list != null) {
+			request.setAttribute("searchCategory", searchCategory);
+			request.setAttribute("searchWord", searchWord);
+			request.setAttribute("pi", pi);
+			request.setAttribute("list", list);
+			
+			// 공지사항 리스트 페이지를 포워딩 
+			request.getRequestDispatcher("views/board/boardListView.jsp").forward(request, response);
+		}
 
 	}
 

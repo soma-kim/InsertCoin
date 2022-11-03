@@ -59,9 +59,12 @@ public class NoticeListController extends HttpServlet {
 			listCount = new NoticeService().selectListCountTitle(searchWord);
 		} else if(searchCategory != null && searchCategory.equals("searchContent")) { // 내용 으로 검색할 때 
 			listCount = new NoticeService().selectListCountContent(searchWord);
+			
 		} else { // 전체 조회 기본 페이지 
 			listCount = new NoticeService().selectListCount();
 		}
+		
+		
 		// currentPage : 현재 페이지(즉, 사용자가 요청한 페이지)
 		// => 쿼리스트링으로 대놓고 넘김! 
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
