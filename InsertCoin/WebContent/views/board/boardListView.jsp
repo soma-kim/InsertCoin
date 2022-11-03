@@ -84,20 +84,21 @@
 			                        <input type="button" value="글쓰기" class="board_button" onclick="enrollPage();">
 			                    </div>
 		                    <% } %>
-		                	
-		                    <div class="board_search board-right">
-		                        <select class="board_search">
-		                            <option selected>제목+내용</option>
-		                            <option value="10">제목</option>
-		                            <option value="20">내용</option>
-		                            <option value="30">작성자</option>
-		                            <option value="40">댓글</option>
-		                            <option value="50">게임명</option>
-		                        </select>
-		                        <input type="text">
-		                        <button class="board_button">검색</button>
-		                    </div>
-            		
+	                		<form id="search-form" action="<%= contextPath %>/list.bo?currnetPage=1" method="get" name="searchForm">
+			                    <div class="board_search board-right">
+			                        <select name="category" class="board_search">
+			                            <!-- <option selected>제목+내용</option> -->
+			                            <option value="title">제목</option>
+			                            <option value="content">내용</option>
+			                            <option value="writer">작성자</option>
+			                            <!-- <option value="40">댓글</option> -->
+			                            <!-- <option value="50">게임명</option> -->
+			                        </select>
+			                        <input type="text" name="searchContent" id="searchContent">
+			                        <button type="submit" class="board_button">검색</button>
+			                        <input type="hidden" name="currentPage" value="1">
+			                    </div>
+            				</form>
 	                    <br><br>
 	                    <!-- 페이징바 -->
 	                    <div class="pagingBar">
@@ -131,7 +132,7 @@
 	
 	<script>
 		function enrollPage() {
-			location.href = "<%=contextPath %>/enrollForm.bo";
+			location.href = "<%= contextPath %>/enrollForm.bo";
 		}
 		
 		// 게시글에 클릭 버튼 걸기
@@ -140,6 +141,7 @@
 				location.href = "<%= contextPath %>/detail.bo?genNo=" + $(this).children().eq(0).text();
 			});
 		});
+
 	</script>
 	
 

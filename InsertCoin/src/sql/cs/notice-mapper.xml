@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>SQL</comment>
+	
+	<entry key="selectListCount">
+		SELECT COUNT(*) NOTICE_VIEWS
+		FROM NOTICE
+		WHERE NOTICE_SHOW = 'Y'
+	</entry>
+	
+	<entry key="selectListCountAll">
+		SELECT COUNT(*) NOTICE_VIEWS
+		FROM NOTICE
+		WHERE NOTICE_SHOW = 'Y'
+		  AND NOTICE_TITLE LIKE '%' || ? || '%'
+		   OR NOTICE_CONTENT LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="selectListCountTitle">
+		SELECT COUNT(*) NOTICE_VIEWS
+		FROM NOTICE
+		WHERE NOTICE_SHOW = 'Y'
+		  AND NOTICE_TITLE LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="selectListCountContent">
+		SELECT COUNT(*) NOTICE_VIEWS
+		FROM NOTICE
+		WHERE NOTICE_SHOW = 'Y'
+		  AND NOTICE_CONTENT LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="selectNoticeList">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, N.*
+		        FROM (SELECT NOTICE_NO
+		                   , NOTICE_TITLE
+		                   , NOTICE_REGISTER_DATE
+		                   , NOTICE_VIEWS
+		              FROM NOTICE
+		              WHERE NOTICE_SHOW = 'Y'
+		              ORDER BY NOTICE_NO DESC) N)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectNoticeListAll">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, N.*
+		        FROM (SELECT NOTICE_NO
+		                   , NOTICE_TITLE
+		                   , NOTICE_REGISTER_DATE
+		                   , NOTICE_VIEWS
+		              FROM NOTICE
+		              WHERE NOTICE_SHOW = 'Y'
+		                AND (NOTICE_TITLE LIKE '%' || ? || '%'
+		                 OR NOTICE_CONTENT LIKE '%' || ? || '%')
+		              ORDER BY NOTICE_NO DESC) N)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectNoticeListTitle">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, N.*
+		        FROM (SELECT NOTICE_NO
+		                   , NOTICE_TITLE
+		                   , NOTICE_REGISTER_DATE
+		                   , NOTICE_VIEWS
+		              FROM NOTICE
+		              WHERE NOTICE_SHOW = 'Y'
+		                AND NOTICE_TITLE LIKE '%' || ? || '%'
+		              ORDER BY NOTICE_NO DESC) N)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectNoticeListContent">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, N.*
+		        FROM (SELECT NOTICE_NO
+		                   , NOTICE_TITLE
+		                   , NOTICE_REGISTER_DATE
+		                   , NOTICE_VIEWS
+		              FROM NOTICE
+		              WHERE NOTICE_SHOW = 'Y'
+		                AND NOTICE_CONTENT LIKE '%' || ? || '%'
+		              ORDER BY NOTICE_NO DESC) N)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="insertNotice">
+		INSERT INTO NOTICE (NOTICE_NO
+						  , NOTICE_TITLE
+						  , NOTICE_CONTENT)
+					VALUES (SEQ_NOTICE_NO.NEXTVAL
+						  , ?
+						  , ?)
+	</entry>
+	
+	<entry key="insertAttachment">
+		INSERT INTO ATTACHMENT (ATTACHMENT_NO
+							  , NOTICE_NO
+							  , ATTACHMENT_NAME
+							  , ATTACHMENT_RENAME
+							  , ATTACHMENT_PATH)
+						VALUES (SEQ_ATTACHMENT_NO.NEXTVAL
+							  , SEQ_NOTICE_NO.CURRVAL
+							  , ?
+							  , ?
+							  , ?)	
+	</entry>
+	
+	<entry key="increaseViews">
+		UPDATE NOTICE
+		   SET NOTICE_VIEWS = NOTICE_VIEWS + 1
+		 WHERE NOTICE_NO = ?
+		   AND NOTICE_SHOW = 'Y'
+	</entry>
+	
+	<entry key="selectNotice">
+		SELECT NOTICE_NO
+			 , NOTICE_TITLE
+			 , NOTICE_CONTENT
+			 , NOTICE_REGISTER_DATE
+		FROM NOTICE
+		WHERE NOTICE_NO = ?
+		  AND NOTICE_SHOW = 'Y'
+	</entry>
+	
+	<entry key="selectAttachment">
+		SELECT ATTACHMENT_NO
+			 , ATTACHMENT_NAME
+			 , ATTACHMENT_RENAME
+			 , ATTACHMENT_PATH
+		FROM ATTACHMENT
+		WHERE NOTICE_NO = ?
+		  AND ATTACHMENT_STATUS = 'N'
+	</entry>
+	
+	<entry key="updateNotice">
+		UPDATE NOTICE
+		   SET NOTICE_TITLE = ?
+		     , NOTICE_CONTENT = ?
+		 WHERE NOTICE_NO = ?
+		   AND NOTICE_SHOW = 'Y'
+	</entry>
+	
+	<entry key="updateAttachment">
+		UPDATE ATTACHMENT 
+		   SET ATTACHMENT_NAME = ?
+		     , ATTACHMENT_RENAME = ?
+		     , ATTACHMENT_UPLOAD_DATE = SYSDATE
+		WHERE ATTACHMENT_NO = ?
+	</entry>
+	
+	<entry key="insertNewAttachment">
+		INSERT INTO ATTACHMENT (ATTACHMENT_NO
+							  , NOTICE_NO
+							  , ATTACHMENT_NAME
+							  , ATTACHMENT_RENAME
+							  , ATTACHMENT_PATH)
+						VALUES (SEQ_ATTACHMENT_NO.NEXTVAL
+							  , ?
+							  , ?
+							  , ?
+							  , ?)	
+	</entry>
+	
+	<entry key="deleteNotice">
+		UPDATE NOTICE
+		SET NOTICE_SHOW = 'N'
+		WHERE NOTICE_NO = ?
+	</entry>
+	
+	<entry key="deleteAttachment">
+		UPDATE ATTACHMENT
+		SET ATTACHMENT_STATUS = 'Y'
+		WHERE ATTACHMENT_NO = ?
+	</entry>
+	
+</properties>

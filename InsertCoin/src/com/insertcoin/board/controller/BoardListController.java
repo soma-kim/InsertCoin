@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.insertcoin.board.model.service.BoardService;
 import com.insertcoin.board.model.vo.Board;
 import com.insertcoin.common.model.vo.PageInfo;
+import com.insertcoin.cs.model.service.NoticeService;
 
 /**
  * Servlet implementation class BoardListController
@@ -32,6 +33,13 @@ public class BoardListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String category = request.getParameter("category");
+		String searchContent = request.getParameter("searchContent");
+		
+		System.out.println(category);
+		System.out.println(searchContent);
+		
 		// 페이징 처리
 		int listCount; 	 // 현재 총 게시글 개수
 		int currentPage; // 현재 요청한 페이지(= 사용자 요청 페이지)
@@ -42,8 +50,17 @@ public class BoardListController extends HttpServlet {
 		int startPage;   // 페이지 하단에 보여질 페이징바의 시작 수(1, 11, ...)
 		int endPage;     // 페이지 하단에 보여질 페이징바의 끝 수(10, 20, ...)
 		
-		// 총 게시글 개수
-		listCount = new BoardService().selectListCount();
+		// listcount : 총 게시글 개수
+				// 검색 카테고리 선택, 게시글 개수 조회용 
+				if(category != null && category.equals("title")) { // 제목+내용 으로 검색할 때 
+					listCount = new NoticeService().selectListCountAll(searchContent);
+				} else if(category != null && category.equals("content")) { // 제목 으로 검색할 때 
+					listCount = new NoticeService().selectListCountTitle(searchContent);
+				} else if(category != null && category.equals("writer")) { // 내용 으로 검색할 때 
+					listCount = new NoticeService().selectListCountContent(searchContent);
+				} else { // 전체 조회 기본 페이지 
+					listCount = new NoticeService().selectListCount();
+				}
 		
 		// 현재 페이지
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
