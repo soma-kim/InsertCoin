@@ -183,6 +183,11 @@
                     		
                     		// 1초 간격마다 selectGenCommentList 함수 실행
                     		setInterval(selectGenCommentList, 1000);
+                    		
+                    		for(var j in list) {
+                        		if(loginUser == list[j].memNo) {}
+                    		}
+
                     	});
                     	
                     	function insertGenComment() {
@@ -226,10 +231,13 @@
                     					
                     					result1 += "<tr>"
                     							// + 	"<td rowspan='2' width='5%'><img src="resources/image/profile/profile_default.png" id="profile_photo"></td>"
-                    							+ 	"<td colspan='2'><div class='comment_info1'>" + list[i].memNo + "</div></td>"
+                    							+ 	"<td><div class='comment_info1'>" + list[i].memNo + "</div></td>"
                     							+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
                     							+ 	"<td><button class='comment_info3 btn btn-danger' data-toggle='modal' data-target='#myReport'>신고</button></td></tr>"
-                    							+ 	"<tr class='line'><td>" + list[i].genCommentContent + "</td></tr>"
+                    							+ 	"<tr><td><div class='comment_info4'>" + list[i].genCommentContent + "</td>"
+                    							+   "<td colspan='2'><div><button class='comment_button' onclick='gcUpdate();'>수정</button>&nbsp;|&nbsp;<button class='comment_button' onclick='gcDelete();'>삭제</button></div></div></td></tr>"
+                    							+   "<tr><td colspan='4' class='line'></td></tr>"
+                    							
                     				}
                     				
                     				$(".comment_table thead").html(result1);
@@ -260,6 +268,14 @@
     	
     	function report() {
     		alert("신고가 성공적으로 접수되었습니다.");
+    	}
+    	
+    	function gcUpdate() {
+    		location.href="<%=contextPath %>/gcUpdate.bo";
+    	}
+    	
+    	function gcDelete() {
+    		location.href="<%=contextPath %>/gcDelete.bo";
     	}
     </script>
     
