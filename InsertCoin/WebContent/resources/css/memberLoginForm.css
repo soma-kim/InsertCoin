@@ -59,6 +59,9 @@ div {
     border-radius: 5px;
 }
 
+#saveEmailCheck {
+	display : inline-block;
+}
 
 /* 로그인 버튼 */
 #login_table button {

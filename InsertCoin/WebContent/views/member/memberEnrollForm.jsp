@@ -61,6 +61,7 @@
                                 <div><label id="emailCheckOutput"></label></div>
                             </td>
                         </tr>
+                        <!--
                         <tr>
                             <th colspan="4">
                                 <input type="text" name="certification_num" placeholder="인증번호를 입력하세요." required><br>
@@ -70,6 +71,7 @@
                             </th>
                             
                         </tr>
+                        -->
                         <tr>
                             <th colspan="6">비밀번호</th>
                         </tr>
@@ -115,8 +117,8 @@
         
         <%@ include file = "../../views/common/footer.jsp" %>
 
-        <script>
-        	// 아이디 중복 체크용 제이쿼리
+        <script>           
+        	// 이메일 중복 체크용 제이쿼리
         	function emailCheck() {
         		var $memEmail = $("#enroll_table input[name=memEmail]");
         		
@@ -131,11 +133,11 @@
         					$("#emailCheckOutput").text("이미 존재하는 아이디이므로 사용할 수 없습니다.").css("color","red").css("font-size","12px");
         					$memEmail.val("");
         					$memEmail.focus();
-        					
+        					$("#enroll_button").prop("disabled", true);
         				} else {
         					
         					$("#emailCheckOutput").text("사용 가능한 아이디입니다!").css("color","rgb(232, 183, 34)").css("font-size","12px");
-        					
+        					$("#enroll_button").prop("disabled", false);
         				}
         				
         			},
@@ -163,12 +165,15 @@
         					$("#nicknameCheckOutput").text("이미 존재하는 닉네임이므로 사용할 수 없습니다.").css("color","red").css("font-size","12px");
         					$memNickname.val("");
         					$memNickname.focus();
+        					$("#enroll_button").prop("disabled", true);
         					
         				} else {
                 			if(regNickname.test(nickname) == false) {
             					$("#nicknameCheckOutput").text("닉네임은 2~10자로 한글(자음, 모음 별도 금지)/영문자/숫자가 포함될 수 있습니다.").css("color","red").css("font-size","12px");
+            					$("#enroll_button").prop("disabled", true);
        						} else {
         						$("#nicknameCheckOutput").text("사용 가능한 닉네임입니다!").css("color","rgb(232, 183, 34)").css("font-size","12px");
+        						$("#enroll_button").prop("disabled", false);
         					}
         				}
         				
@@ -182,7 +187,7 @@
         	
         	// 비밀번호 확인용 제이쿼리
         	$('.pwd').focusout(function() {
-        		        		
+        		
         		let pwd1 = $("#pwd1").val();
         		let pwd2 = $("#pwd2").val();
         		let regPwd = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣!@#$%^&*_-]{8,20}$/;
@@ -191,11 +196,14 @@
         			
         			if(pwd1 != pwd2) {
         				$("#pwdCheckOutput").text("비밀번호가 일치하지 않습니다. 다시 확인해 주세요.").css("color","red").css("font-size","12px");
+        				$("#enroll_button").prop("disabled", true);
         			} else {
         				if(regPwd.test(pwd2) == false) {
         					$("#pwdCheckOutput").text("비밀번호는 8~20자로 숫자/영문자/특수문자(!@#$%^&*)가 포함될 수 있습니다.").css("color","red").css("font-size","12px");
+        					$("#enroll_button").prop("disabled", true);
         				} else {
         					$("#pwdCheckOutput").text("비밀번호가 일치합니다!").css("color","rgb(232, 183, 34)").css("font-size","12px");
+        					$("#enroll_button").prop("disabled", false);
         				}
         			}
         			

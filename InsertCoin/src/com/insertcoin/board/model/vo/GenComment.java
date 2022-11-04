@@ -35,11 +35,12 @@ public class GenComment {
 		this.memNo = memNo;
 		this.genCommentRegister = genCommentRegister;
 	}
-
+	
 	// 메소드부
 	public int getGenCommentNo() {
 		return genCommentNo;
 	}
+
 
 	public void setGenCommentNo(int genCommentNo) {
 		this.genCommentNo = genCommentNo;

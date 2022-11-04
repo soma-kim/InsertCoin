@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.insertcoin.admin.model.vo.Report;
 import com.insertcoin.board.model.service.BoardService;
 import com.insertcoin.board.model.vo.Board;
 import com.insertcoin.common.model.vo.Attachment;
@@ -33,7 +34,15 @@ public class BoardDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// 해당 게시글 먼저 뽑기
-		int genNo = Integer.parseInt(request.getParameter("genNo"));
+		int genNo = Integer.parseInt(request.getParameter("genNo"));  // 41 찍혔다!!!
+		// int gcNo = Integer.parseInt(request.getParameter("gcNo")); // 주석 풀면 오류난다...
+		//int memNo = Integer.parseInt(request.getParameter("memNo")); 			  // null
+		//String reportReason = request.getParameter("reportReason");	  // null
+		
+		//System.out.println(genNo);
+		// System.out.println(gcNo);
+		//System.out.println(memNo);
+		//System.out.println(reportReason);
 		
 		// 조회수 증가 / 게시글 조회(Board) / 첨부파일 조회(Attachment)
 		// => 서비스로 요청 3번을 보내야 함
@@ -47,6 +56,7 @@ public class BoardDetailController extends HttpServlet {
 			// 게시글 조회, 첨부파일 조회
 			Board b = bService.selectBoard(genNo);
 			Attachment at = bService.selectAttachment(genNo);
+			//Report r = bService.reportGenBoardCount(genNo, memNo, reportReason);
 			
 			// 게시글 정보 보내기
 			request.setAttribute("b", b);
@@ -63,6 +73,18 @@ public class BoardDetailController extends HttpServlet {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			
 		}
+		/*
+		if(reportReason != null && gcNo != 0) {
+			GenComment gc = new GenComment();
+			gc.setMemNo(memNo);
+			gc.setGenCommentNo(gcNo);
+			gc.setGenCommentContent(reportReason);
+			
+			gc = bService.reportGenCommentCount(memNo, gcNo, reportReason);
+		} else if (reportReason != null && genNo != 0) {
+			Board b = bService.reportGenBoardCount(memNo, genNo, reportReason);
+		}
+		*/
 	}
 
 	/**

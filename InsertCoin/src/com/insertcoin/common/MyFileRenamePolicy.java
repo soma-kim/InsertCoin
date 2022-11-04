@@ -19,6 +19,7 @@ public class MyFileRenamePolicy implements FileRenamePolicy {
 		// 수정 파일명
 		// gen_post__yyyymmdd_nnnnn
 		// 파일 업로드 시간
+		
 		String text = "gen_post_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		
 		// 5자리 랜덤값

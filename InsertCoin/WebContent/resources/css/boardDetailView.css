@@ -307,6 +307,12 @@ div {
     border-radius: 5px;
 }
 
+input {
+	border : none;
+	background-color : rgb(23, 26, 33);
+	color : white;
+}
+
 #red_board {
     float : right;
     background-color :rgb(231, 76, 60);
@@ -339,21 +345,30 @@ div {
     margin-right : 10px;
 }
 
+.nicknameForm {
+	width : 600px;
+}
+
+.commentStart {
+   width : 800px;
+}
+
 .comment_info1 {
-    width : 600px;
+    width : 400px;
     display : inline-block;
     font-weight: bold;
     padding : 0px;
 }
 
 .comment_info2 {
-    width : 150px;
+    width : 200px;
     display : inline-block;
     font-size : 13px;
     text-align : right;
 }
 
 .comment_info3 {
+	width : 70px;
     float: right;
     background-color: rgb(231, 76, 60);
     color : white;

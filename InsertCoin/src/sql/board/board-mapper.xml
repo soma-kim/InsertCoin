@@ -291,6 +291,36 @@
 			SET GEN_SHOW = 'N'
 		WHERE GEN_NO = ?
 	</entry>
+	
+	<entry key="reportGenBoardCount">
+		INSERT INTO REPORT (REPORT_NO
+                  , REPORT_TYPE
+                  , MEM_NO
+                  , REPORT_REASON
+                  , GEN_NO
+                  , REPORTED_MEM_NO)
+           VALUES  (SEQ_REPORT_NO.NEXTVAL
+                  , 3
+                  , ?
+                  , ?
+                  , ?
+	</entry>
+	
+	<entry key="reportGenCommentCount">
+		INSERT INTO REPORT (REPORT_NO
+                  , REPORT_TYPE
+                  , MEM_NO
+                  , REPORT_REASON
+                  , GEN_NO
+                  , REPORTED_MEM_NO)
+           VALUES  (SEQ_REPORT_NO.NEXTVAL
+                  , 4
+                  , ?
+                  , ?
+                  , ?
+	</entry>
+	
+	
 
 
 

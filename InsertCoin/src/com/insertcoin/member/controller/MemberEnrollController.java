@@ -1,6 +1,7 @@
 package com.insertcoin.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,8 +51,8 @@ public class MemberEnrollController extends HttpServlet {
 	    int result = new MemberService().insertMember(m);
 	    
 	    if(result > 0) {
-	        
-	        HttpSession session = request.getSession();
+	    	
+	    	HttpSession session = request.getSession();        
 	        session.setAttribute("alertMsg", "회원가입 성공! " + memNickname + "님, 동전 준비하세요!");
 	        
 	        // 회원가입 성공했으니 다시 메인 페이지로

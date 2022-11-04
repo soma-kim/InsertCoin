@@ -289,6 +289,37 @@ public class BoardService {
 		return result;
 	}
 	
+	// 게시글 신고용
+	public int reportGenBoardCount(int memNo, int genNo, String reportReason) {
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().reportGenBoardCount(conn, memNo, genNo, reportReason);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
+	
+	
+	// 댓글 신고용
+	public int reportGenCommentCount(int memNo, int gcNo, String reportReason) {
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().reportGenCommentCount(conn, memNo, gcNo, reportReason);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
+	
 	
 
 }

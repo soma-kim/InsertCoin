@@ -12,7 +12,7 @@ public class Member {
     private String memNickname; // MEM_NICKNAME VARCHAR2(30) NOT NULL UNIQUE,
     private Date renameDate;    // RENAME_DATE DATE,
     private Date registerDate;  // REGISTER_DATE DATE DEFAULT SYSDATE NOT NULL);
-
+    
     // 생성자부
     public Member() {
         super();
@@ -96,7 +96,7 @@ public class Member {
         this.registerDate = registerDate;
     }
 
-    @Override
+	@Override
     public String toString() {
         return "Member [memNo=" + memNo + ", memActive=" + memActive + ", memEmail=" + memEmail + ", memPwd=" + memPwd
                 + ", memNickname=" + memNickname + ", renameDate=" + renameDate + ", registerDate=" + registerDate

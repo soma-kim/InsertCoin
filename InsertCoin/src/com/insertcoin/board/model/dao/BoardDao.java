@@ -1,6 +1,9 @@
 package com.insertcoin.board.model.dao;
 
 import static com.insertcoin.common.JDBCTemplate.close;
+import static com.insertcoin.common.JDBCTemplate.commit;
+import static com.insertcoin.common.JDBCTemplate.getConnection;
+import static com.insertcoin.common.JDBCTemplate.rollback;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -369,8 +372,8 @@ public class BoardDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			// GEN_CATEGORY / GAME_NO / MEM_NO / GEN_TITLE / GEN_CONTENT
-			// genCategory / gemeNo / memNo / genTitle / genContent
+			// GEN_CATEGORY / GAME_NO / MEM_NO / GEN_TITLE / GEN_CONTENT / GEN_NO(신고)
+			// genCategory / gemeNo / memNo / genTitle / genContent / reportGen
 			pstmt.setString(1, b.getGenCategory());
 			// pstmt.setInt(2, b.getGameNo());
 			pstmt.setInt(2, Integer.parseInt(b.getMemNo()));
@@ -722,5 +725,65 @@ public class BoardDao {
 		 return result;
 		 
 	 }
+	 
+		// 게시글 신고용
+		public int reportGenBoardCount(Connection conn, int memNo, int genNo, String reportReason) {
+			
+			// INSERT = > int
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("reportGenBoardCount");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, memNo); // 신고한 사람
+				pstmt.setString(2, reportReason); // 사유
+				pstmt.setInt(3, genNo); // 게시글 번호
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
+
+		}
+		
+		
+		// 댓글 신고용
+		public int reportGenCommentCount(Connection conn, int memNo, int gcNo, String reportReason) {
+			
+			// INSERT = > int
+			
+			int result = 0;
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("reportGenCommentCount");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, memNo); // 신고한 사람
+				pstmt.setString(2, reportReason); // 사유
+				pstmt.setInt(3, gcNo); // 댓글 번호
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
+
+		}
+		
 
 }

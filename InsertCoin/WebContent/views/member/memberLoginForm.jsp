@@ -91,9 +91,9 @@
                         </tr>
                         <tr>
                         	<th colspan="2">
-                        		<div id="saveEmail" style="display:inline-block;">
-									<input type="checkbox" name="saveEmail" value="y">
-									<label for="saveEmail" style="font-size:13px;">이메일 저장</label>
+                        		<div id="saveEmail">
+									<input type="checkbox" name="saveEmail" value="y" id="saveEmailCheck">
+									<label for="saveEmailCheck" style="font-size:13px;">이메일 저장</label>
 								</div>
                         	</th>
                         </tr>
@@ -101,14 +101,10 @@
                             <!-- 로그인 버튼 -->
                             <th><button type="submit">로그인</button></th>
                         </tr>
+                        <tr>
+                        	<th><button onclick="enrollPage();">회원가입</button></th>
+                        </tr>
                     </table>
-                    <br>
-                    <!-- 회원가입, 비밀번호 찾기 -->
-                    <div align="center" id="etc">
-                        <a onclick="enrollPage();">회원가입</a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;
-                        <a href="">비밀번호 찾기</a>
-                    </div>
                 </div>
             </form>
         </div>

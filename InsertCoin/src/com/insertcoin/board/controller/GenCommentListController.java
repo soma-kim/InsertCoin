@@ -39,6 +39,8 @@ public class GenCommentListController extends HttpServlet {
 		// 게시글 번호를 서비스를 전달하면서 요청 처리 후 결과 받기
 		ArrayList<GenComment> list = new BoardService().selectGenCommentList(genNo);
 		
+		request.setAttribute("list", list);
+		
 		// JSON을 이용하면 list를 하나하나 넘겨 줘야 하는데 GSON은 한 번에 배열 형태로 보낼 수 있음
 		// GSON을 이용해서 응답 => ArrayList를 자바 스크립트 배열 형태로 변환
 		response.setContentType("application/json; charset=UTF-8");

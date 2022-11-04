@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.insertcoin.board.model.vo.Board, com.insertcoin.common.model.vo.Attachment" %>
+    pageEncoding="UTF-8" import="com.insertcoin.board.model.vo.Board, com.insertcoin.common.model.vo.Attachment, java.util.ArrayList, com.insertcoin.board.model.vo.GenComment" %>
 <%
 	// 필요한 데이터 먼저 뽑기
 	Board b = (Board)request.getAttribute("b");
-	// 게시글 번호, 카테고리명, 글 제목, 글 내용, 작성자 아이디, 작성일, 신고 수
+	// 게시글 번호, 카테고리명, 게임명, 작성자 닉네임, 글 제목, 글 내용, 작성일, 조회수
+	// GEN_NO(int), GEN_CATEGORY(string), GAME_NAME(string), MEM_NICKNAME(string), GEN_TITLE(string), GEN_CONTENT(string), GEN_REGISTER_DATE(date), GEN_VIEWS(int)
 	
 	Attachment at = (Attachment)request.getAttribute("at");
+	
+	ArrayList<GenComment> list = (ArrayList<GenComment>)request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -75,43 +78,11 @@
 										<% if(loginUser != null && loginUser.getMemNickname().equals(b.getMemNo())) { %>
 											<button class="table_button" onclick="location.href='<%= contextPath %>/updateForm.bo?genNo=<%= b.getGenNo() %>'">수정</button>
 	                                        <button class="table_button" onclick="location.href='<%= contextPath %>/delete.bo?genNo=<%= b.getGenNo() %>'">삭제</button>
-	                                        <button type="button" id="red_board" class="btn btn-primary" data-toggle="modal" data-target="#myReport">신고</button>
+	                                    <% } else if(loginUser != null && !(loginUser.getMemNickname().equals(b.getMemNo()))) { %>
+        		                            <button type="button" id="red_board" class="btn btn-primary" data-toggle="modal" data-target="#myReport">신고</button>
 	                                    <% } %>
+	                                    
                                         <button class="table_button" onclick="goToList();">목록</button>
-                                        
-                                        <!--------------------------------------------- 신고 모달창 ------------------------------------------------>
-                                        <!-- The Modal -->
-                                        <div class="modal fade" id="myReport">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                            
-                                                <!-- Modal Header -->
-                                                <div class="modal-header">
-                                                <h5 class="modal-title">게시글 신고</h5>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                </div>
-                                                
-                                                <!-- Modal body -->
-                                                <div class="modal-body">
-                                                    <b>신고사유</b><br>
-                                                    <input type="checkbox" id="1" value="1"><label for="1">&nbsp;스팸</label><br>
-                                                    <input type="checkbox" id="2" value="2"><label for="2">&nbsp;음란성</label><br>
-                                                    <input type="checkbox" id="3" value="3"><label for="3">&nbsp;증오심 표현</label><br>
-                                                    <input type="checkbox" id="4" value="4"><label for="4">&nbsp;잘못된 정보</label><br>
-                                                    <input type="checkbox" id="5" value="5"><label for="5">&nbsp;기타</label><br>
-                                                    <input type="text" placeholder="내용을 입력해 주세요" style="width:300px;">
-                                                </div>
-                                                
-                                                <!-- Modal footer -->
-                                                <div class="modal-footer">
-                                                <button class="modal_button button2" type="submit" data-dismiss="modal" onclick="report();">신청</button>
-                                                </div>
-                                                
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <!--------------------------------------------- 신고 모달창 ------------------------------------------------>
-
                                     </div>
                                 </td>
                             </tr>
@@ -123,29 +94,7 @@
                         </tbody>
                     </table>
                     <table class="comment_table">
-                    	<!--
-                        <tr>
-                            <td rowspan="2" width="5%">
-                                <img src="resources/image/profile/profile_default.png" id="profile_photo">
-                            </td>
-                            <td>
-                                <div class="comment_info1">
-                                    <div>내닉넴짱짱</div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="comment_info2">
-                                    <div>2022.10.23 12:02</div>
-                                </div>
-                            </td>
-                            <td>
-                                <button id="comment_info3" class="btn btn-primary" data-toggle="modal" data-target="#myReport">신고</button>
-                            </td>
-                        </tr>
-                        <tr class="line">
-                            <td>어디보자... 점점 구색을 갖추는듯하나 아직 고칠 게 많아 보입니다 ^^</td>
-                        </tr>
-                        -->
+
                         <thead>
                         </thead>
                         
@@ -173,9 +122,9 @@
 	                            </td>
 	                        </tr>
 	                        <% } %>
-                        </tbody> 
-                    </table>
-  
+						</tbody> 
+                </table> 
+                    
                     <script>
                     
                     	$(function() {
@@ -212,7 +161,7 @@
                     			}
                     		});
                     	}
-                    
+                    	
                     	function selectGenCommentList() {
                     		
                     		$.ajax({
@@ -221,6 +170,7 @@
                     			success : function(list) {
                     				
                     				//console.log(list);
+                    				//2:{genCommentNo: 15, genCommentContent: '흠', genNo: 41, memNo: '닉네임1', genCommentRegister: '22/11/04 01:18:55'}
                     				
                     				// 최신 댓글이 아래로 가게 하고 싶어서 추가함
                     				list = list.reverse();
@@ -228,39 +178,23 @@
                     				var result1 = "";
                     				for (var i in list) { // i: 0, 1, 2, 3, ..., 마지막 인덱스값
                     					
-										<% if(loginUser != null && loginUser.getMemNickname().equals(b.getMemNo())) { %> // 여기 안 걸림 ㅠㅠ
-                    					result1 += "<tr>"
-                    							// + 	"<td rowspan='2' width='5%'><img src="resources/image/profile/profile_default.png" id="profile_photo"></td>"
-                    							+ 	"<td><div class='comment_info1'>" + list[i].memNo + "</div></td>"
-                    							+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
-                    							+ 	"<td><button class='comment_info3 btn btn-danger' data-toggle='modal' data-target='#myReport'>신고</button></td></tr>"
-                    							+ 	"<tr><td><div class='comment_info4'>" + list[i].genCommentContent + "</td>"
-                    							+   "<td colspan='2'><div><button class='comment_button' onclick='gcUpdate();'>수정</button>&nbsp;|&nbsp;<button class='comment_button' onclick='gcDelete();'>삭제</button></div></div></td></tr>"
-                    							+   "<tr><td colspan='4' class='line'><input type='hidden' name='gcNo' value='list.[i].genCommentNo'><input type='hidden' name='genNo' value='list.[i].genGenNo'></td></tr>";
+                    					result1 += "<div class='commentStart'><tr>"
+                   							+ 	"<td class='commentWidth'><div class='comment_info1'>" + list[i].memNo + "</div></td>"
+                   							+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
+                   							+ 	"<tr><td><div class='comment_info4'>" + list[i].genCommentContent + "</div></td>"
+                   							+ 	"<td><button class='comment_info3 btn btn-danger' data-toggle='modal' data-target='#myReport'>신고</button></td></tr>"
+                   							+   "<tr><td colspan='4' class='line'></td></tr></div>";
+                   							
                     					// 찍히긴 하는데... 1초마다 우루루... NumberFormatException: null
-                    					// console.log(list[i].genCommentNo);
-                    					// console.log(list[i].genNo);
+                    					// console.log(list[i].genCommentNo); // 13 찍힘
+                    					//console.log(list[i].genNo); // 41 찍힘
+                    					//console.log(list[i].memNo); // 닉네임 1 찍힘
                     					
-                    					 <% } else if(loginUser != null && !(loginUser.getMemNickname().equals(b.getMemNo()))) { %> // 로그인 하면 여기 걸림
+                    					//console.log(loginUser.getMemNo()); // 오류 뜨는디
                     					
-                    					result1 += "<tr>"
-                    							// + 	"<td rowspan='2' width='5%'><img src="resources/image/profile/profile_default.png" id="profile_photo"></td>"
-                    							+ 	"<td><div class='comment_info1'>" + list[i].memNo + "</div></td>"
-                    							+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
-                    							+ 	"<td><button class='comment_info3 btn btn-danger' data-toggle='modal' data-target='#myReport'>신고</button></td></tr>"
-                    							+ 	"<tr><td><div class='comment_info4'>" + list[i].genCommentContent + "</td>"
-                    							+   "<tr><td colspan='4' class='line'><input type='hidden' name='gcNo' value='list.[i].genCommentNo'><input type='hidden' name='genNo' value='list.[i].genGenNo'></td></tr>";
-                    					<% } else { %> // 로그인 안 하면 여기 걸림
-                    					
-                    					result1 += "<tr>"
-                							// + 	"<td rowspan='2' width='5%'><img src="resources/image/profile/profile_default.png" id="profile_photo"></td>"
-                							+ 	"<td><div class='comment_info1'>" + list[i].memNo + "</div></td>"
-                							+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
-                							+ 	"<tr class='line'><td><div class='comment_info4'>" + list[i].genCommentContent + "</td></tr>"
-                    					
-                    					<% } %>
                     				}
                     				
+                    				// console.log(list[0].genCommentNo);
                     				
                     				$(".comment_table thead").html(result1);
                     				
@@ -275,13 +209,54 @@
                     		});
                     		
                     	}
-                    
+                    	
                     </script>
+                    
                 </div>
                 
         </div>
 
     </div>
+    
+          <!--------------------------------------------- 신고 모달창 ------------------------------------------------>
+          <!-- The Modal -->
+          <form id="report-form" action="" method="get" name="reportForm">
+          <div class="modal fade" id="myReport">
+              <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+              
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                  <h5 class="modal-title">게시글 신고</h5>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                      <b>신고사유</b><br>
+                      <select name="reportReason">
+                       <option value="스팸" selected>스팸</option>
+                       <option value="음란성">음란성</option>
+                       <option value="증오심 표현">증오심 표현</option>
+                       <option value="잘못된 정보">잘못된 정보</option>
+                       <option value="기타">기타</option>
+                      </select>
+               	<input type="hidden" name="currentPage" value="<%= b.getGenNo() %>">
+               	<!-- <input type="hidden" name="loginUser" value="loginUser.getMemNo()">  -->
+               	<!-- 얘 넣으면 갑자기 밑에 로그인하지 않았을 때 댓글 막는 게 Dead Code 됨... 왜? 스크립틀릿 넣으면 주석 안 되길래 일단 없앰 -->
+                      
+                  </div>
+                  
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                  <button class="modal_button button2" type="submit" data-dismiss="modal" onclick="report();">신청</button>
+                  </div>
+                  
+              </div>
+              </div>
+          </div>
+          </form>
+          <!--------------------------------------------- 신고 모달창 ------------------------------------------------>
     
     <script>
     	function goToList() {
@@ -290,15 +265,9 @@
     	
     	function report() {
     		alert("신고가 성공적으로 접수되었습니다.");
+    		location.href = "<%= contextPath %>/report.bo";
     	}
-    	
-    	function gcUpdate() {
-    		location.href="<%=contextPath %>/gcUpdate.bo";
-    	}
-    	
-    	function gcDelete() {
-    		location.href="<%=contextPath %>/gcDelete.bo";
-    	}
+    
     </script>
     
     <%@ include file = "../../views/common/footer.jsp" %>
