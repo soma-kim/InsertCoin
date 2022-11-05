@@ -65,16 +65,16 @@ public class BoardInsertController extends HttpServlet {
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
 			// DB에 기록할 데이터를 뽑아서 VO 객체에 담기
-			String memNo = multiRequest.getParameter("memNo");
+			//String memNickname = multiRequest.getParameter("memNickname"); // insert문에는 조인 못 해서 memNo로 닉네임 가지고 옴
+			int memNo = Integer.parseInt(multiRequest.getParameter("memNo"));
 			String genCategory = multiRequest.getParameter("genCategory");
-			// String gameNo = multiRequest.getParameter("gameNo");
 			String genTitle = multiRequest.getParameter("genTitle");
 			String genContent = multiRequest.getParameter("genContent");
 			
 			Board b = new Board();
 			b.setMemNo(memNo);
 			b.setGenCategory(genCategory);
-			// b.setGameNo(null);
+			//b.setMemNickname(memNickname);
 			b.setGenTitle(genTitle);
 			b.setGenContent(genContent);
 			

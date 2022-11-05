@@ -290,10 +290,10 @@ public class BoardService {
 	}
 	
 	// 게시글 신고용
-	public int reportGenBoardCount(int memNo, int genNo, String reportReason) {
+	public int reportGenBoardCount(int memNo, int genNo, String reportReason, int reportedMemNo) {
 		Connection conn = getConnection();
 		
-		int result = new BoardDao().reportGenBoardCount(conn, memNo, genNo, reportReason);
+		int result = new BoardDao().reportGenBoardCount(conn, memNo, genNo, reportReason, reportedMemNo);
 		
 		if(result > 0) {
 			commit(conn);

@@ -55,6 +55,7 @@
 			  FROM (SELECT GEN_NO
 			  			 , GEN_CATEGORY
 			  			 , B.GAME_NO
+			  			 , M.MEM_NO
 			  			 , M.MEM_NICKNAME
 			  			 , GEN_TITLE
 			  			 , GEN_REGISTER_DATE
@@ -73,6 +74,7 @@
 		        FROM (SELECT GEN_NO
 			  			 , GEN_CATEGORY
 			  			 , G.GAME_NO
+			  			 , M.MEM_NO
 			  			 , M.MEM_NICKNAME
 			  			 , GEN_TITLE
 			  			 , GEN_REGISTER_DATE
@@ -92,6 +94,7 @@
 		        FROM (SELECT GEN_NO
 			  			 , GEN_CATEGORY
 			  			 , G.GAME_NO
+			  			 , M.MEM_NO
 			  			 , MEM_NICKNAME
 			  			 , GEN_TITLE
 			  			 , GEN_REGISTER_DATE
@@ -110,6 +113,7 @@
 		        FROM (SELECT GEN_NO
 			  			 , GEN_CATEGORY
 			  			 , G.GAME_NO
+			  			 , M.MEM_NO
 			  			 , MEM_NICKNAME
 			  			 , GEN_TITLE
 			  			 , GEN_REGISTER_DATE
@@ -128,6 +132,7 @@
 		        FROM (SELECT GEN_NO
 			  			 , GEN_CATEGORY
 			  			 , G.GAME_NO
+			  			 , M.MEM_NO
 			  			 , M.MEM_NICKNAME
 			  			 , GEN_TITLE
 			  			 , GEN_REGISTER_DATE
@@ -146,6 +151,7 @@
 		        FROM (SELECT G.GEN_NO
 			  			 , GEN_CATEGORY
 			  			 , G.GAME_NO
+			  			 , M.MEM_NO
 			  			 , M.MEM_NICKNAME
 			  			 , GEN_TITLE
 			  			 , GEN_REGISTER_DATE
@@ -203,6 +209,7 @@
 		SELECT GEN_NO
 		     , GEN_CATEGORY
 		     , GAME_NAME
+		     , M.MEM_NO
 		     , M.MEM_NICKNAME
 		     , GEN_TITLE
 		     , GEN_CONTENT
@@ -304,6 +311,7 @@
                   , ?
                   , ?
                   , ?
+                  , ?)
 	</entry>
 	
 	<entry key="reportGenCommentCount">
@@ -317,7 +325,7 @@
                   , 4
                   , ?
                   , ?
-                  , ?
+                  , ?)
 	</entry>
 	
 	

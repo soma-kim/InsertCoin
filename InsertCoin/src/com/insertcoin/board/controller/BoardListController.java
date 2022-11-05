@@ -107,7 +107,7 @@ public class BoardListController extends HttpServlet {
 			request.setAttribute("pi", pi);
 			request.setAttribute("list", list);
 			
-			// 공지사항 리스트 페이지를 포워딩 
+			// 게시글 리스트 페이지를 포워딩 
 			request.getRequestDispatcher("views/board/boardListView.jsp").forward(request, response);
 		}
 

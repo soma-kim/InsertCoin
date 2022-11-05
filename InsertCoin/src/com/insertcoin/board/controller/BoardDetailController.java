@@ -33,9 +33,14 @@ public class BoardDetailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//System.out.println();
+		
+		//System.out.println(request.getParameter("genNo"));
+		//System.out.println(request.getParameter("gcNo"));
+		
 		// 해당 게시글 먼저 뽑기
 		int genNo = Integer.parseInt(request.getParameter("genNo"));  // 41 찍혔다!!!
-		// int gcNo = Integer.parseInt(request.getParameter("gcNo")); // 주석 풀면 오류난다...
+		//int gcNo = Integer.parseInt(request.getParameter("gcNo")); // 주석 풀면 오류난다...
 		//int memNo = Integer.parseInt(request.getParameter("memNo")); 			  // null
 		//String reportReason = request.getParameter("reportReason");	  // null
 		

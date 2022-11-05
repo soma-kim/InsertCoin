@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, com.insertcoin.game.model.vo.Game" %>
-<%
-	// 게임 리스트 먼저 뽑기
-	ArrayList<Game> list = (ArrayList<Game>)request.getAttribute("list");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +21,7 @@
 	            <div class="outer">
 	                <div id="title">자유게시판</div>
 	                	<form id="enroll-form" action="<%= contextPath %>/insert.bo" method="post" enctype="multipart/form-data" name="enrollForm">
+		                    <input type="hidden" name="memNickname" value="<%= loginUser.getMemNickname() %>">
 		                    <input type="hidden" name="memNo" value="<%= loginUser.getMemNo() %>">
 		                    <table align="center" class="table-area">
 		                            <tr>

@@ -8,7 +8,8 @@ public class Board {
 	private int genNo; // GEN_NO NUMBER PRIMARY KEY,
 	private String genCategory; // GEN_CATEGORY VARCHAR2(10) NOT NULL,
 	private String gameNo; // GAME_NO NUMBER REFERENCES GAME(GAME_NO),
-	private String memNo; // MEM_NO NUMBER NOT NULL REFERENCES MEMBER(MEM_NO),
+	private int memNo; // MEM_NO NUMBER NOT NULL REFERENCES MEMBER(MEM_NO),
+	private String memNickname;
 	private String genTitle; // GEN_TITLE VARCHAR2(100) NOT NULL,
 	private String genContent; // GEN_CONTENT VARCHAR2(4000) NOT NULL,
 	private Date genRegister; // GEN_REGISTER_DATE DATE DEFAULT SYSDATE NOT NULL,
@@ -20,7 +21,7 @@ public class Board {
 		super();
 	}
 
-	public Board(int genNo, String genCategory, String gameNo, String memNo, String genTitle, String genContent,
+	public Board(int genNo, String genCategory, String gameNo, int memNo, String memNickName, String genTitle, String genContent,
 			Date genRegister, int genViews, String genShow) {
 		super();
 		this.genNo = genNo;
@@ -35,26 +36,28 @@ public class Board {
 	}
 	
 	// 게시글 메인용 생성자
-	public Board(int genNo, String genCategory, String gameNo, String memNo, String genTitle, Date genRegister,
+	public Board(int genNo, String genCategory, String gameNo, int memNo, String memNickname, String genTitle, Date genRegister,
 			int genViews) {
 		super();
 		this.genNo = genNo;
 		this.genCategory = genCategory;
 		this.gameNo = gameNo;
 		this.memNo = memNo;
+		this.memNickname = memNickname;
 		this.genTitle = genTitle;
 		this.genRegister = genRegister;
 		this.genViews = genViews;
 	}
 	
 	// 일반게시글 상세 조회용 생성자
-	public Board(int genNo, String genCategory, String gameNo, String memNo, String genTitle, String genContent,
+	public Board(int genNo, String genCategory, String gameNo, int memNo, String memNickname, String genTitle, String genContent,
 			Date genRegister, int genViews) {
 		super();
 		this.genNo = genNo;
 		this.genCategory = genCategory;
 		this.gameNo = gameNo;
 		this.memNo = memNo;
+		this.memNickname = memNickname;
 		this.genTitle = genTitle;
 		this.genContent = genContent;
 		this.genRegister = genRegister;
@@ -87,13 +90,22 @@ public class Board {
 		this.gameNo = gameNo;
 	}
 
-	public String getMemNo() {
+	public int getMemNo() {
 		return memNo;
 	}
 
-	public void setMemNo(String memNo) {
+	public void setMemNo(int memNo) {
 		this.memNo = memNo;
 	}
+	
+	public String getMemNickname() {
+		return memNickname;
+	}
+
+	public void setMemNickname(String memNickname) {
+		this.memNickname = memNickname;
+	}
+	
 
 	public String getGenTitle() {
 		return genTitle;
@@ -138,8 +150,8 @@ public class Board {
 	@Override
 	public String toString() {
 		return "Board [genNo=" + genNo + ", genCategory=" + genCategory + ", gameNo=" + gameNo + ", memNo=" + memNo
-				+ ", genTitle=" + genTitle + ", genContent=" + genContent + ", genRegister=" + genRegister
-				+ ", genViews=" + genViews + ", genShow=" + genShow + "]";
+				+ ", memNickname=" + memNickname + ", genTitle=" + genTitle + ", genContent=" + genContent
+				+ ", genRegister=" + genRegister + ", genViews=" + genViews + ", genShow=" + genShow + "]";
 	}
 
 }

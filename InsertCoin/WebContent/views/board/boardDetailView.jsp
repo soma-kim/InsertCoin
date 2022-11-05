@@ -29,9 +29,8 @@
 
         <!-- 컨텐츠 영역 -->
         <div class="content_container">
-
-            <div class="outer">
-                <div id="title">자유게시판</div>
+         <div class="outer">
+         	<div id="title">자유게시판</div>
                     <!-- 조회할 게시물이 보여질 자리 -->
                     <table align="center" class="list-area">
                         <thead>
@@ -47,7 +46,7 @@
                         <tbody>
                             <tr class="line">
                                 <td>
-                                    <div class="board_left">작성자: <b><%= b.getMemNo() %></b></div>
+                                    <div class="board_left">작성자: <b><%= b.getMemNickname() %></b></div>
                                 </td>
                                 <td>
                                     <div class="board_right">조회수 <%= b.getGenViews() %></div>
@@ -75,10 +74,10 @@
                             <tr>
                                 <td colspan="3">
                                     <div>
-										<% if(loginUser != null && loginUser.getMemNickname().equals(b.getMemNo())) { %>
+										<% if(loginUser != null && loginUser.getMemNo() == b.getMemNo()) { %>
 											<button class="table_button" onclick="location.href='<%= contextPath %>/updateForm.bo?genNo=<%= b.getGenNo() %>'">수정</button>
 	                                        <button class="table_button" onclick="location.href='<%= contextPath %>/delete.bo?genNo=<%= b.getGenNo() %>'">삭제</button>
-	                                    <% } else if(loginUser != null && !(loginUser.getMemNickname().equals(b.getMemNo()))) { %>
+	                                    <% } else if(loginUser != null && loginUser.getMemNo() != b.getMemNo()) { %>
         		                            <button type="button" id="red_board" class="btn btn-primary" data-toggle="modal" data-target="#myReport">신고</button>
 	                                    <% } %>
 	                                    
@@ -91,6 +90,7 @@
                                     <div id="comment_count"></div>
                                 </td>
                             </tr>
+                           
                         </tbody>
                     </table>
                     <table class="comment_table">
@@ -106,6 +106,10 @@
 	                                <div class=comment_container> 댓글쓰기 <br>
 	                                    <textarea class="comment_textarea" id="genCommentContent" placeholder="명예훼손, 개인정보 유출, 분쟁 유발, 허위사실 유포 등의 글은 이용약관에 의해 제재는 물론 법률에 의해 처벌받을 수 있습니다. 건전한 커뮤니티를 위해 자제를 당부드립니다."></textarea>
 	                                    <button id="comment_submit" onclick="insertGenComment();">등록</button>
+	                        		<input type="hidden" name="memNo" value="<%= loginUser.getMemNo() %>"> <!-- 신고한 사람 -->
+	         						<input type="hidden" name="genNo" value="<%= b.getGenNo() %>"> <!-- 게시글 번호 -->
+	         						<input type="hidden" name="reportedMemNo" value="<%= b.getMemNo() %>">
+	         						
 	                                </div>    
 	                                
 	                            </td>
@@ -123,9 +127,65 @@
 	                        </tr>
 	                        <% } %>
 						</tbody> 
-                </table> 
+                </table>
+                	<form id="report-form" action="<%= contextPath %>/reportBoard.bo" method="post" name="reportForm">
+                 <!--------------------------------------------- 신고 모달창 ------------------------------------------------>
+					          <!-- The Modal -->
+					          <div class="modal fade" id="myReport">
+					              <div class="modal-dialog modal-dialog-centered">
+					              <div class="modal-content">
+					              
+					                  <!-- Modal Header -->
+					                  <div class="modal-header">
+					                  <h5 class="modal-title">게시글 신고</h5>
+					                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					                  <input type="hidden" name="memNo" value="<%= loginUser.getMemNo() %>"> <!-- 신고한 사람 -->
+	         						<input type="hidden" name="genNo" value="<%= b.getGenNo() %>"> <!-- 게시글 번호 -->
+	         						<input type="hidden" name="reportedMemNo" value="<%= b.getMemNo() %>">
+					                  </div>
+					                  
+					                  <!-- Modal body -->
+					                  <div class="modal-body">
+					                      <b>신고사유</b><br>
+					                      <select name="reportReason">
+					                       <option value="스팸" selected>스팸</option>
+					                       <option value="음란성">음란성</option>
+					                       <option value="증오심 표현">증오심 표현</option>
+					                       <option value="잘못된 정보">잘못된 정보</option>
+					                       <option value="기타">기타</option>
+					                      </select>
+					                      
+					                  </div>
+					                  
+					                  <!-- Modal footer -->
+					                  <div class="modal-footer">
+					                  <button id="reportSubmitButton" class="modal_button button2" type="submit" data-dismiss="modal">신청</button>
+					                  </div>
+					                  
+					                  <script>
+					                  
+					                  
+						                  $("#reportButton").on("click", function() {
+							                    $("#myReport").modal();
+							                });
+								            
+								            $("#reportSubmitButton").on("click", function() {
+								            	
+								            	document.getElementById("report-form").submit();
+								            });
+					                  </script>
+					                  
+					              </div>
+					              </div>
+					          </div>
+					          </form>
+          <!--------------------------------------------- 신고 모달창 ------------------------------------------------>
                     
                     <script>
+                    
+                	function goToList() {
+                		location.href = "<%=contextPath %>/list.bo?currentPage=1";
+                	}
                     
                     	$(function() {
                     		selectGenCommentList();
@@ -177,7 +237,7 @@
                     				
                     				var result1 = "";
                     				for (var i in list) { // i: 0, 1, 2, 3, ..., 마지막 인덱스값
-                    					
+                    					                    					
                     					result1 += "<div class='commentStart'><tr>"
                    							+ 	"<td class='commentWidth'><div class='comment_info1'>" + list[i].memNo + "</div></td>"
                    							+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
@@ -186,7 +246,7 @@
                    							+   "<tr><td colspan='4' class='line'></td></tr></div>";
                    							
                     					// 찍히긴 하는데... 1초마다 우루루... NumberFormatException: null
-                    					// console.log(list[i].genCommentNo); // 13 찍힘
+                    					//console.log(list[i].genCommentNo); // 13 찍힘
                     					//console.log(list[i].genNo); // 41 찍힘
                     					//console.log(list[i].memNo); // 닉네임 1 찍힘
                     					
@@ -201,6 +261,8 @@
                     				var result2 = list.length;
                     				
                     				$("#comment_count").text("댓글  " + result2 + "개");
+                    				
+                    				
                     				
                     			},
                     			error : function() {
@@ -217,58 +279,6 @@
         </div>
 
     </div>
-    
-          <!--------------------------------------------- 신고 모달창 ------------------------------------------------>
-          <!-- The Modal -->
-          <form id="report-form" action="" method="get" name="reportForm">
-          <div class="modal fade" id="myReport">
-              <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-              
-                  <!-- Modal Header -->
-                  <div class="modal-header">
-                  <h5 class="modal-title">게시글 신고</h5>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  </div>
-                  
-                  <!-- Modal body -->
-                  <div class="modal-body">
-                      <b>신고사유</b><br>
-                      <select name="reportReason">
-                       <option value="스팸" selected>스팸</option>
-                       <option value="음란성">음란성</option>
-                       <option value="증오심 표현">증오심 표현</option>
-                       <option value="잘못된 정보">잘못된 정보</option>
-                       <option value="기타">기타</option>
-                      </select>
-               	<input type="hidden" name="currentPage" value="<%= b.getGenNo() %>">
-               	<!-- <input type="hidden" name="loginUser" value="loginUser.getMemNo()">  -->
-               	<!-- 얘 넣으면 갑자기 밑에 로그인하지 않았을 때 댓글 막는 게 Dead Code 됨... 왜? 스크립틀릿 넣으면 주석 안 되길래 일단 없앰 -->
-                      
-                  </div>
-                  
-                  <!-- Modal footer -->
-                  <div class="modal-footer">
-                  <button class="modal_button button2" type="submit" data-dismiss="modal" onclick="report();">신청</button>
-                  </div>
-                  
-              </div>
-              </div>
-          </div>
-          </form>
-          <!--------------------------------------------- 신고 모달창 ------------------------------------------------>
-    
-    <script>
-    	function goToList() {
-    		location.href = "<%=contextPath %>/list.bo?currentPage=1";
-    	}
-    	
-    	function report() {
-    		alert("신고가 성공적으로 접수되었습니다.");
-    		location.href = "<%= contextPath %>/report.bo";
-    	}
-    
-    </script>
     
     <%@ include file = "../../views/common/footer.jsp" %>
 

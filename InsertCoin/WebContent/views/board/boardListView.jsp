@@ -69,7 +69,7 @@
 			                                <td><%= b.getGenNo() %></td>
 			                                <td><%= b.getGenCategory() %></td>
 			                                <td><%= b.getGenTitle() %></td>
-			                                <td><%= b.getMemNo() %></td>
+			                                <td><%= b.getMemNickname() %></td> <!-- 닉네임 -->
 			                                <td><%= b.getGenViews() %></td>
 			                                <td><%= b.getGenRegister() %></td>
 			                            </tr>

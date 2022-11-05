@@ -246,6 +246,7 @@ public class BoardDao {
 				list.add(new Board(rset.getInt("GEN_NO")
 								 , rset.getString("GEN_CATEGORY")
 								 , rset.getString("GAME_NO")
+								 , rset.getInt("MEM_NO")
 								 , rset.getString("MEM_NICKNAME")
 								 , rset.getString("GEN_TITLE")
 								 , rset.getDate("GEN_REGISTER_DATE")
@@ -316,6 +317,7 @@ public class BoardDao {
 				list.add(new Board(rset.getInt("GEN_NO")
 						 , rset.getString("GEN_CATEGORY")
 						 , rset.getString("GAME_NO")
+						 , rset.getInt("MEM_NO")
 						 , rset.getString("MEM_NICKNAME")
 						 , rset.getString("GEN_TITLE")
 						 , rset.getDate("GEN_REGISTER_DATE")
@@ -375,8 +377,7 @@ public class BoardDao {
 			// GEN_CATEGORY / GAME_NO / MEM_NO / GEN_TITLE / GEN_CONTENT / GEN_NO(신고)
 			// genCategory / gemeNo / memNo / genTitle / genContent / reportGen
 			pstmt.setString(1, b.getGenCategory());
-			// pstmt.setInt(2, b.getGameNo());
-			pstmt.setInt(2, Integer.parseInt(b.getMemNo()));
+			pstmt.setInt(2, b.getMemNo());
 			pstmt.setString(3, b.getGenTitle());
 			pstmt.setString(4, b.getGenContent());
 			
@@ -475,6 +476,7 @@ public class BoardDao {
 				b = new Board(rset.getInt("GEN_NO")
 							, rset.getString("GEN_CATEGORY")
 							, rset.getString("GAME_NAME") // 일단 게임 태그 제외
+							, rset.getInt("MEM_NO")
 							, rset.getString("MEM_NICKNAME")
 							, rset.getString("GEN_TITLE")
 							, rset.getString("GEN_CONTENT")
@@ -727,7 +729,7 @@ public class BoardDao {
 	 }
 	 
 		// 게시글 신고용
-		public int reportGenBoardCount(Connection conn, int memNo, int genNo, String reportReason) {
+		public int reportGenBoardCount(Connection conn, int memNo, int genNo, String reportReason, int ReportedMemNo) {
 			
 			// INSERT = > int
 			
@@ -742,6 +744,7 @@ public class BoardDao {
 				pstmt.setInt(1, memNo); // 신고한 사람
 				pstmt.setString(2, reportReason); // 사유
 				pstmt.setInt(3, genNo); // 게시글 번호
+				pstmt.setInt(4, ReportedMemNo); //신고 당한 사람
 				
 				result = pstmt.executeUpdate();
 				
