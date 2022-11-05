@@ -242,7 +242,7 @@
                    							+ 	"<td class='commentWidth'><div class='comment_info1'>" + list[i].memNo + "</div></td>"
                    							+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
                    							+ 	"<tr><td><div class='comment_info4'>" + list[i].genCommentContent + "</div></td>"
-                   							+ 	"<td><button class='comment_info3 btn btn-danger' data-toggle='modal' data-target='#myReport'>신고</button></td></tr>"
+                   							// + 	"<td><button class='comment_info3 btn btn-danger' data-toggle='modal' data-target='#myReport'>신고</button></td></tr>"
                    							+   "<tr><td colspan='4' class='line'></td></tr></div>";
                    							
                     					// 찍히긴 하는데... 1초마다 우루루... NumberFormatException: null
