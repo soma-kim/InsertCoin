@@ -106,7 +106,9 @@
 	                                <div class=comment_container> 댓글쓰기 <br>
 	                                    <textarea class="comment_textarea" id="genCommentContent" placeholder="명예훼손, 개인정보 유출, 분쟁 유발, 허위사실 유포 등의 글은 이용약관에 의해 제재는 물론 법률에 의해 처벌받을 수 있습니다. 건전한 커뮤니티를 위해 자제를 당부드립니다."></textarea>
 	                                    <button id="comment_submit" onclick="insertGenComment();">등록</button>
+						 <% if(loginUser != null) { %>
 	                        		<input type="hidden" name="memNo" value="<%= loginUser.getMemNo() %>"> <!-- 신고한 사람 -->
+						<% } %>
 	         						<input type="hidden" name="genNo" value="<%= b.getGenNo() %>"> <!-- 게시글 번호 -->
 	         						<input type="hidden" name="reportedMemNo" value="<%= b.getMemNo() %>">
 	         						
