@@ -9,6 +9,7 @@
 	Attachment at = (Attachment)request.getAttribute("at");
 	
 	ArrayList<GenComment> list = (ArrayList<GenComment>)request.getAttribute("list");
+	System.out.println(list);
 %>
 <!DOCTYPE html>
 <html>
@@ -225,9 +226,11 @@
                     			url : "gclist.bo",
                     			data : {genNo : <%= b.getGenNo() %>},
                     			success : function(list) {
+                    				// 현재 list가 자바 스크립트의 배열 형태로 들어와 있음
                     				
                     				//console.log(list);
                     				//2:{genCommentNo: 15, genCommentContent: '흠', genNo: 41, memNo: '닉네임1', genCommentRegister: '22/11/04 01:18:55'}
+
                     				
                     				// 최신 댓글이 아래로 가게 하고 싶어서 추가함
                     				list = list.reverse();
@@ -236,14 +239,25 @@
                     				for (var i in list) { // i: 0, 1, 2, 3, ..., 마지막 인덱스값
                     					                    					
                     					result1 += "<div class='commentStart'><tr>"
-                   							+ 	"<td class='commentWidth'><div class='comment_info1'>" + list[i].memNo + "</div></td>"
-                   							+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
-                   							+ 	"<tr><td><div class='comment_info4'>" + list[i].genCommentContent + "</div></td>"
-                   							<% if(loginUser != null) { %>
-                   							+ 	"<td><button class='comment_info3 btn btn-danger' data-toggle='modal' data-target='#myCommentReport'>신고</button><input type='hidden' name='gcNo' class='gcNo' value='" + list[i].genCommentNo + "'></td></tr>"
-                   							+   "<td colspan='2'><div><button class='comment_button' onclick='gcDelete();'>삭제</button><input type='hidden' name='genCommentNo' class='genCommentNo' value='" + list[i].genCommentNo + "'></div></td></tr>"
-                   							<% } %>
-                   							+   "<tr><td colspan='4' class='line'></td></tr></div>";
+												+ 	"<td class='commentWidth'><div class='comment_info1'>" + list[i].memNo + "</div></td>"
+												+ 	"<td><div class='comment_info2'>" + list[i].genCommentRegister + "</div></td>"
+                   							+ 	"<tr>"
+												+ "<td><div class='comment_info4'>" + list[i].genCommentContent + "</div></td>";
+												
+												
+												if(<%= loginUser != null %>) { 
+													
+													result1 += "<td><button class='comment_info3 btn btn-danger' data-toggle='modal' data-target='#myCommentReport'>신고</button><input type='hidden' name='gcNo' class='gcNo' value='" + list[i].genCommentNo + "'></td></tr>";
+													if("<%= loginUser.getMemNickname() %>" == list[i].memNo) {
+                    			
+                    									result1 += "<td colspan='2'><div><button class='comment_button' onclick='gcDelete();'>삭제</button><input type='hidden' name='genCommentNo' class='genCommentNo' value='" + list[i].genCommentNo + "'></div></td></tr>";
+                    								}
+												}
+												
+                   							result1 +=   "<tr>"
+												+ "<td colspan='4' class='line'></td>"
+											+ "</tr>"
+										+ "</div>";
                    							
                     					// 찍히긴 하는데... 1초마다 우루루... NumberFormatException: null
                     					// console.log(list[i].genCommentNo); // 13 찍힘
@@ -346,7 +360,7 @@
 						                    $("#myCommentReport").modal();
 						                    
 						                    var gcNo = $(this).siblings(".gcNo").val();
-				  		        			console.log(gcNo); // 클릭한 대로 뽑았다...
+				  		        			// console.log(gcNo); // 클릭한 대로 뽑았다...
 				  		        			
 				  		        			$("#myCommentReport #gcNo").val(gcNo);
 				  		        			
