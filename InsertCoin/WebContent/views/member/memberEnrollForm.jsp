@@ -77,7 +77,7 @@
                         </tr>
                         <tr>
                             <th colspan="6">
-                                <input type="password" class="pwd" id="pwd1" minlength="8" maxlength="16" required>
+                                <input type="password" class="pwd" id="pwd1" name="memPwd" minlength="8" maxlength="16" required>
                             </th>
                         </tr>
                         <tr>

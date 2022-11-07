@@ -73,11 +73,3 @@ div {
     font-weight : bold;
     border-radius: 5px;
 }
-
-/* 회원가입, 비밀번호 찾기 */
-#etc>a {
-    width : 89.5%;
-    margin-left : 20px;
-    color : black;
-    font-weight : bold;
-}

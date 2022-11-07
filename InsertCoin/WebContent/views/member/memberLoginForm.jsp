@@ -77,7 +77,7 @@
                         </tr>
                         <tr>
                             <th>
-                                <input type="email" name="memEmail" required>
+                                <input type="email" name="memEmail" id="memEmail" required>
                             </th>
                         </tr>
                         <tr>
@@ -86,7 +86,7 @@
                         </tr>
                         <tr>
                             <th>
-                                <input type="password" name="memPwd" required>
+                                <input type="password" name="memPwd" id="memPwd" required>
                             </th>
                         </tr>
                         <tr>
@@ -102,7 +102,7 @@
                             <th><button type="submit">로그인</button></th>
                         </tr>
                         <tr>
-                        	<th><button onclick="enrollPage();">회원가입</button></th>
+                        	<th><button type="button" id="enrollButton" onclick="enrollMember();">회원가입</button></th>
                         </tr>
                     </table>
                 </div>
@@ -127,9 +127,15 @@
 				
 			});
 			
-    		function enrollPage() {
-    			location.href = "<%=contextPath %>/enrollForm.me";
+    		function enrollMember() {
+    			
+    			$("#memEmail").removeAttr("required");
+    			$("#memPwd").removeAttr("required");
+    			
+    			location.href = "<%= contextPath %>/enrollPolicy.me";
     		}
+    		
+    		
 	    </script>
 
 </body>

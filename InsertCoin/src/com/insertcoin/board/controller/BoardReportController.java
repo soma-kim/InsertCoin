@@ -31,10 +31,12 @@ public class BoardReportController extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		int genNo = Integer.parseInt(request.getParameter("genNo"));
-		int memNo = Integer.parseInt(request.getParameter("memNo")); // 로그인 한 사람
+		int genNo = Integer.parseInt(request.getParameter("genNo")); // 게시글 번호
+		int memNo = Integer.parseInt(request.getParameter("memNo")); // 로그인 한 사람 == 신고자
 		String reportReason = request.getParameter("reportReason"); // 신고 내용
 		int reportedMemNo = Integer.parseInt(request.getParameter("reportedMemNo")); // 게시글 쓴 사람
+		
+		// System.out.println("게시글 번호: " + genNo + ", 신고한(로그인한) 사람: " + memNo + ", 신고 내용: " + reportReason + ", 게시글 쓴 사람: " + reportedMemNo);
 		
 		int result = new BoardService().reportGenBoardCount(genNo, memNo, reportReason, reportedMemNo);
 		

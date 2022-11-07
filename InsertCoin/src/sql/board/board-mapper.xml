@@ -294,9 +294,9 @@
 	</entry>
 	
 	<entry key="deleteComment">
-		UPDATE GEN_BOARD_COMMENT
-			SET GEN_SHOW = 'N'
-		WHERE GEN_NO = ?
+		UPDATE GEN_COMMENT
+			SET GEN_COMMENT_SHOW = 'N'
+		WHERE GEN_COMMENT_NO = ?
 	</entry>
 	
 	<entry key="reportGenBoardCount">
@@ -319,10 +319,11 @@
                   , REPORT_TYPE
                   , MEM_NO
                   , REPORT_REASON
-                  , GEN_NO
+                  , GEN_COMMENT_NO
                   , REPORTED_MEM_NO)
            VALUES  (SEQ_REPORT_NO.NEXTVAL
                   , 4
+                  , ?
                   , ?
                   , ?
                   , ?)

@@ -729,7 +729,7 @@ public class BoardDao {
 	 }
 	 
 		// 게시글 신고용
-		public int reportGenBoardCount(Connection conn, int memNo, int genNo, String reportReason, int ReportedMemNo) {
+		public int reportGenBoardCount(Connection conn, int genNo, int memNo, String reportReason, int reportedMemNo) {
 			
 			// INSERT = > int
 			
@@ -744,7 +744,7 @@ public class BoardDao {
 				pstmt.setInt(1, memNo); // 신고한 사람
 				pstmt.setString(2, reportReason); // 사유
 				pstmt.setInt(3, genNo); // 게시글 번호
-				pstmt.setInt(4, ReportedMemNo); //신고 당한 사람
+				pstmt.setInt(4, reportedMemNo); //신고 당한 사람
 				
 				result = pstmt.executeUpdate();
 				
@@ -760,7 +760,7 @@ public class BoardDao {
 		
 		
 		// 댓글 신고용
-		public int reportGenCommentCount(Connection conn, int memNo, int gcNo, String reportReason) {
+		public int reportGenCommentCount(Connection conn, int gcNo, int memNo, String reportReason, int reportedMemNo) {
 			
 			// INSERT = > int
 			
@@ -775,6 +775,7 @@ public class BoardDao {
 				pstmt.setInt(1, memNo); // 신고한 사람
 				pstmt.setString(2, reportReason); // 사유
 				pstmt.setInt(3, gcNo); // 댓글 번호
+				pstmt.setInt(4, reportedMemNo); //신고 당한 사람
 				
 				result = pstmt.executeUpdate();
 				

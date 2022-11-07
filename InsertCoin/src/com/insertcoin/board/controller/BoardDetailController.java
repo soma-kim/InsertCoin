@@ -78,18 +78,6 @@ public class BoardDetailController extends HttpServlet {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			
 		}
-		/*
-		if(reportReason != null && gcNo != 0) {
-			GenComment gc = new GenComment();
-			gc.setMemNo(memNo);
-			gc.setGenCommentNo(gcNo);
-			gc.setGenCommentContent(reportReason);
-			
-			gc = bService.reportGenCommentCount(memNo, gcNo, reportReason);
-		} else if (reportReason != null && genNo != 0) {
-			Board b = bService.reportGenBoardCount(memNo, genNo, reportReason);
-		}
-		*/
 	}
 
 	/**
