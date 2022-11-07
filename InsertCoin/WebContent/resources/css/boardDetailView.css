@@ -326,7 +326,8 @@ input {
 
 /* 댓글 개수 */
 #comment_count { 
-    background-color: rgba(224, 224, 224, 0.61);
+    color : rgb(232, 183, 34);
+    font-weight : bold;
 }
 
 /* 댓글창 */

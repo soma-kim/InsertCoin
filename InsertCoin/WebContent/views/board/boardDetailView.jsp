@@ -116,7 +116,7 @@
 	                        <tr>
 	                            <td colspan="4">
 	                                <div class=comment_container> 댓글쓰기 <br>
-	                                    <textarea class="comment_textarea" readonly>로그인 후 이용해 주세요.</textarea>
+	                                    <textarea class="comment_textarea" readonly>댓글 작성 및 조회는 로그인 후에 가능합니다</textarea>
 	                                    <button id="comment_submit" disabled>등록</button>
 	                                </div>    
 	                                
@@ -230,13 +230,20 @@
                     				
                     				//console.log(list);
                     				//2:{genCommentNo: 15, genCommentContent: '흠', genNo: 41, memNo: '닉네임1', genCommentRegister: '22/11/04 01:18:55'}
-
+									
+                    				<% System.out.println(loginUser); %>
                     				
                     				// 최신 댓글이 아래로 가게 하고 싶어서 추가함
                     				list = list.reverse();
                     				
                     				var result1 = "";
                     				for (var i in list) { // i: 0, 1, 2, 3, ..., 마지막 인덱스값
+                    					// 찍히긴 하는데... 1초마다 우루루... NumberFormatException: null
+                    					// console.log(list[i].genCommentNo); // 13 찍힘
+                    					//console.log(list[i].genNo); // 41 찍힘
+                    					//console.log(list[i].memNo); // 닉네임 1 찍힘
+                    					
+                    					//console.log(loginUser.getMemNo()); // 오류 뜨는디
                     					                    					
                     					result1 += "<div class='commentStart'><tr>"
 												+ 	"<td class='commentWidth'><div class='comment_info1'>" + list[i].memNo + "</div></td>"
@@ -258,13 +265,6 @@
 												+ "<td colspan='4' class='line'></td>"
 											+ "</tr>"
 										+ "</div>";
-                   							
-                    					// 찍히긴 하는데... 1초마다 우루루... NumberFormatException: null
-                    					// console.log(list[i].genCommentNo); // 13 찍힘
-                    					//console.log(list[i].genNo); // 41 찍힘
-                    					//console.log(list[i].memNo); // 닉네임 1 찍힘
-                    					
-                    					//console.log(loginUser.getMemNo()); // 오류 뜨는디
                     					
                     				}
                     				

@@ -7,8 +7,29 @@
 <title>자유게시판 글 작성</title>
     <!-- CSS 스타일시트 -->
     <link href="resources/css/boardEnrollForm.css" rel="stylesheet">
+    
+    <!-- 텍스트 에디터 -->
+    <script src="https://cdn.tiny.cloud/1/f4ak5s88o2ixuuek5wihr4xiq28lytq1x5dhui4azyajwzxa/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> 
 </head>
 <body>
+
+	<script>
+	    <!-- 에디터  -->
+	        tinymce.init({
+	          selector: 'textarea',
+	          plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
+	          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+	          tinycomments_mode: 'embedded',
+	          tinycomments_author: 'Author name',
+	          mergetags_list: [
+	            { value: 'First.Name', title: 'First Name' },
+	            { value: 'Email', title: 'Email' },
+	          ],
+	          toolbar : false,
+	          width : 935,
+	          height : 198
+	        });
+	</script>
 
     <!-- 전체 영역 -->
     <div class="wrap">
@@ -44,7 +65,7 @@
 		                            </tr>
 		                            <tr>
 		                                <td colspan="2">
-		                                    <textarea class="input_text" name="genContent" placeholder=" 내용을 입력해 주세요" required></textarea>
+		                                    <textarea class="input_text" name="genContent" placeholder=" 내용을 입력해 주세요"></textarea>
 		                                </td>
 		                            </tr>
 		                            <tr>
@@ -76,8 +97,7 @@
 				enrollForm.genCategory.focus();
 				return false;
 			}
-	
-	    }
+		}
 	</script>
 
 </body>
